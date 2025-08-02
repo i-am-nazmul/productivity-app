@@ -1,0 +1,23 @@
+export default function Goals({goals}:{goals : string[]}){
+      return (
+            <div className="flex flex-col justify-between h-full">
+                  <div>
+                        <h1 className="text-4xl font-bold tracking-tighter text-gray-600 text-center m-4">Goals</h1>
+                        <ul className="font-mono tracking-tight px-4 ">
+
+      
+                              
+                              {goals.map((goal, index) => (
+                              <li key={index}>
+                              <button className="cursor-pointer bg-amber-200 w-full text-start px-6 py-2 rounded-xs">
+                                    {goal}
+                              </button>
+                              </li>
+                              ))}
+                        </ul>
+                  </div>
+
+                  <button className="font-mono tracking-tight bg-emerald-900 text-white cursor-pointer px-2">Add new goal</button>
+            </div>
+      )
+}
