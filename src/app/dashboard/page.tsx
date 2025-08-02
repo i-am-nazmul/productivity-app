@@ -2,14 +2,21 @@
 import React from "react";
 import WorkCalendar from "@/components/WorkCalendar";
 import Goals from "@/components/Goals";
+import useGoalList from "@/store/store";
+
+
 
 export default function DashboardPage(){
 
       const [newGoal,setNewGoal]=React.useState('');
-      const [goals,setGoals]=React.useState<string[]>([]);
+      const {goals,addGoal}=useGoalList();
+
+
+
+
       const addNewGoal = function(){
             
-            setGoals([...goals,newGoal]);
+            addGoal(newGoal);
             setNewGoal("");
 
       }
