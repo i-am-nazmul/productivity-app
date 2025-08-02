@@ -13,14 +13,14 @@ export default function WorkCalendar() {
   const daysInMonth = getDaysInMonth();
 
   return (
-    <div className="p-4">
-      <h1 className="text-xl font-bold mb-2">Calendar</h1>
+    <div className="px-4">
+      <h1 className="text-4xl font-bold tracking-tighter text-gray-600 text-center m-4">Calendar</h1>
 
       <div className="grid grid-cols-7 gap-2">
         {Array.from({ length: daysInMonth }, (_, index) => (
           <div
             key={index}
-            className="w-10 h-10 flex items-center justify-center bg-emerald-300 text-white font-bold rounded"
+            className="w-12 h-12 flex items-center justify-center bg-yellow-400 hover:bg-amber-800 text-gray-700 font-bold text-2xl rounded-full cursor-pointer"
           >
             {index + 1}
           </div>
