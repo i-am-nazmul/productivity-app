@@ -20,7 +20,7 @@ export default function WorkCalendar() {
         {Array.from({ length: daysInMonth }, (_, index) => (
           <div
             key={index}
-            className="w-12 h-12 flex items-center justify-center bg-yellow-400 hover:bg-amber-800 text-gray-700 font-bold text-2xl rounded-full cursor-pointer"
+            className="w-12 h-12 flex items-center justify-center hover:bg-gray-500 hover:text-white text-gray-700 font-bold text-2xl font-sans rounded-full cursor-pointer border border-gray-300"
           >
             {index + 1}
           </div>
