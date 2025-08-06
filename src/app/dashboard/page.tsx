@@ -5,12 +5,15 @@ import Goals from "@/components/Goals";
 import useGoalList from "@/store/store";
 import axios from "axios";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+
 
 
 export default function DashboardPage(){
 
       const [newGoal,setNewGoal]=React.useState('');
-      const {goals,addGoal}=useGoalList();
+      const { goals, addGoal, setGoals } = useGoalList();
+      const router = useRouter();
 
 
 
@@ -32,21 +35,25 @@ export default function DashboardPage(){
       }
 
 // function for rendering all goals 
-      const allGoals = async function (){
-            const response = await axios.get('/api/get-goals');
-            const goalArray = response.data.goals;
+      const allGoals = async function () {
+      const response = await axios.get('/api/get-goals');
+      const goalArray = response.data.goals;
 
-            for (let i = 0; i < goalArray.length; i++) {
-                  addGoal(goalArray[i].goal);
+      // Convert to array of strings
+      const goalTextArray = goalArray.map((item: any) => item.goal);
+
+      // ✅ Replace state instead of appending
+      setGoals(goalTextArray);
+      };
+
+      const moveToProfilePage = function(){
+            router.push('/profile')          ;
             }
-            
-            
-      }
 
 
-      useEffect(()=>{
-            allGoals();
-      },[])
+      useEffect(() => {
+      allGoals();
+      }, []);
 
       return (
             //outermost div
@@ -60,10 +67,21 @@ export default function DashboardPage(){
                               <h1 className="text-7xl font-bold text-gray-700 tracking-tighter">Dashboard</h1>
 
                               <div className=" flex gap-2 items-center">
-                                    <input type="text" name="" value={newGoal} onChange={(e)=>{setNewGoal(e.target.value)}} placeholder="Enter the new Goal" className="outline-none bg-amber-200 pr-8 py-2 pl-4 text-2xl rounded-xs"/>
+                                    <input type="text" name="" value={newGoal} onChange={(e)=>{setNewGoal(e.target.value)}} placeholder="Enter the new Goal" className="outline-none bg-amber-200 pr-8 py-2 pl-4 text-2xl rounded-sm"/>
 
-                                    <button className="bg-emerald-900 text-white rounded-xs pr-8 py-2 pl-4 text-2xl" onClick={addNewGoal}
+                                    <button className="bg-emerald-900 text-white 
+                                    rounded-sm cursor-pointer px-4 py-2 text-2xl" onClick={addNewGoal}
                                     >Add</button>
+
+                                    <Image src="/download.png"
+                                    width={70}
+                                    height={200}
+                                    alt="work"
+                                    className="bg-amber-400 rounded-full cursor-pointer"
+                                    onClick={moveToProfilePage}
+                                    />
+
+
                               </div>
                         </div>
                         

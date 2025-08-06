@@ -1,16 +1,23 @@
 import Goals from "@/models/goals.models";
 import { NextRequest,NextResponse } from "next/server";
 import { connect } from "@/dbconfig/dbconfig";
+import jwt from "jsonwebtoken";
 
 
-export async function GET(){
+
+
+export async function GET(request : NextRequest){
       await connect();
       try {
-            const allGoals = await Goals.find({});
-            return NextResponse.json({
-                  message : "All the data have been fetched !!",
-                  goals : allGoals
-            })
+            const token = request.cookies.get("token")?.value;
+
+      if (!token) {
+            return NextResponse.json({ message: "Unauthorized. No token provided." }, { status: 401 });
+      }
+      const decodedToken: any = jwt.verify(token, process.env.TOKEN_SECRET!);
+      const userGoals = await Goals.find({owner : decodedToken.id});
+      return NextResponse.json({ goals: userGoals }, { status: 200 });
+
       } catch (error:any) {
             return NextResponse.json({
                   error:error.message

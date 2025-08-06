@@ -18,7 +18,7 @@ export default function LoginPage(){
             });
             if (request.status === 200) {
                   router.push("/dashboard");
-      }
+            }
       
             } catch (error: any) {
                   console.error("Login error");
@@ -48,7 +48,7 @@ export default function LoginPage(){
                               onChange={(e)=>{setPassword(e.target.value)}}/>
 
                               <button className="bg-emerald-800 px-4 py-1 text-white text-4xl cursor-pointer hover:bg-emerald-900"
-                              onClick={Login}>Signup</button>
+                              onClick={Login}>Login</button>
                         </div>
                   </div>
             </div>
