@@ -1,4 +1,15 @@
+import { useAddGoalInput,useDuartionInput } from "@/store/store"
+
+
+
 export default function Goals({goals}:{goals : string[]}){
+      const { displayGoalInput, showGoalInput, hideGoalInput } = useAddGoalInput();
+      const { displayDurationInput, hideDurationInput, showDurationInput } = useDuartionInput();
+
+      function addGoalButton(){
+            showGoalInput();
+            hideDurationInput();
+      }
       
       return (
             <div className="flex flex-col justify-between h-full">
@@ -18,7 +29,7 @@ export default function Goals({goals}:{goals : string[]}){
                         </ul>
                   </div>
 
-                  <button className="font-mono tracking-tight bg-emerald-900 text-white cursor-pointer px-2">Add new goal</button>
+                  <button className="font-mono tracking-tight bg-emerald-900 text-white cursor-pointer px-2" onClick={addGoalButton}>Add new goal</button>
             </div>
       )
 }
