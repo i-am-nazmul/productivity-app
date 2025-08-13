@@ -43,8 +43,12 @@ export default function DashboardPage(){
       const response = await axios.get('/api/get-goals');
       const goalArray = response.data.goals;
 
+      
+
       // Convert to array of strings
       const goalTextArray = goalArray.map((item: any) => item.goal);
+
+      
 
       // Replace state instead of appending
       setGoals(goalTextArray);

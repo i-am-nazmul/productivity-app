@@ -21,7 +21,7 @@ export default function Goals({goals}:{goals : string[]}){
                               
                               {goals.map((goal, index) => (
                               <li key={index}>
-                              <button className="cursor-pointer w-full text-start px-6 py-2 rounded-xs font-semibold text-gray-700 text-2xl tracking-tighter">
+                              <button className="cursor-pointer w-full text-start px-6 py-2 rounded-sm font-semibold text-gray-700 text-2xl tracking-tighter hover:bg-amber-300 hover:text-black">
                                     {goal}
                               </button>
                               </li>

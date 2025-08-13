@@ -63,6 +63,13 @@ const useDuartion = create<Duration>((set) => ({
 }));
 
 
+//current goal selected 
+// type CurrentGoal = {
+//   currentGoal : goals[0],
+//   setCurrentGoal = 
+// }
+
+
 
 
 

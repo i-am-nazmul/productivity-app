@@ -5,7 +5,8 @@ import { useDuartionInput,useAddGoalInput } from "@/store/store";
 export default function WorkCalendar() {
   // State for current year & month
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
-  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth()); // 0-based
+  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
+
   const { displayDurationInput, hideDurationInput, showDurationInput } = useDuartionInput();
   const { displayGoalInput, showGoalInput, hideGoalInput } = useAddGoalInput();
 
@@ -45,6 +46,7 @@ export default function WorkCalendar() {
     showDurationInput();
     hideGoalInput();
     const clickedDate = new Date(currentYear, currentMonth, day);
+    console.log(day);
     console.log(clickedDate.toLocaleString()); // Log date
   }
 
