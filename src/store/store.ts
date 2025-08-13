@@ -1,19 +1,35 @@
 import { create } from 'zustand';
 
+
+
+
 //for loading the tasks from the server
-type GoalList = {
-  goals: string[];
-  addGoal: (goal: string) => void;
-  setGoals: (goals: string[]) => void; //  Add this
+type Goal = {
+  _id: string;
+  owner : string;
+  goal: string;
+  __v: string;
 };
+
+type GoalList = {
+  goals: Goal[];
+  addGoal: (goal: Goal) => void;
+  setGoals: (goals: Goal[]) => void;
+};
+
+
 const useGoalList = create<GoalList>((set) => ({
   goals: [],
   addGoal: (goal) =>
     set((state) => ({
       goals: [...state.goals, goal],
     })),
-  setGoals: (goals) => set({ goals }) //  This replaces the entire array
+  setGoals: (goals) => set({ goals }),
 }));
+
+
+
+
 
 
 //for manipulation of goal input box
@@ -28,6 +44,10 @@ const useAddGoalInput = create<GoalInput>((set)=>({
   hideGoalInput : () => set({displayGoalInput : false}),
   showGoalInput : () => set({displayGoalInput : true}),
 }));
+
+
+
+
 
 
 
@@ -64,13 +84,19 @@ const useDuartion = create<Duration>((set) => ({
 
 
 //current goal selected 
-// type CurrentGoal = {
-//   currentGoal : goals[0],
-//   setCurrentGoal = 
-// }
+type CurrentGoal = {
+  currentGoal : string,
+  setCurrentGoal : (value : string) => void ;
+}
+
+const useCurrentGoal = create<CurrentGoal>((set)=>({
+  currentGoal : '',
+  setCurrentGoal : (value) =>set((state)=>({currentGoal:value}))
+
+}))
 
 
 
 
 
-export {useGoalList,useAddGoalInput,useDuartionInput,useDuartion}
+export {useGoalList,useAddGoalInput,useDuartionInput,useDuartion,useCurrentGoal}

@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import WorkCalendar from "@/components/WorkCalendar";
 import Goals from "@/components/Goals";
-import {useGoalList,useAddGoalInput,useDuartionInput} from "@/store/store";
+import {useGoalList,useAddGoalInput,useDuartionInput,useCurrentGoal} from "@/store/store";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -14,6 +14,7 @@ export default function DashboardPage(){
       const { goals, addGoal, setGoals } = useGoalList();
       const { displayGoalInput, showGoalInput, hideGoalInput } = useAddGoalInput();
       const { displayDurationInput, hideDurationInput, showDurationInput } = useDuartionInput();
+      const {currentGoal,setCurrentGoal}= useCurrentGoal();
 
       const router = useRouter();
 
@@ -42,16 +43,12 @@ export default function DashboardPage(){
       const allGoals = async function () {
       const response = await axios.get('/api/get-goals');
       const goalArray = response.data.goals;
-
-      
-
-      // Convert to array of strings
-      const goalTextArray = goalArray.map((item: any) => item.goal);
-
-      
+    
 
       // Replace state instead of appending
-      setGoals(goalTextArray);
+      setGoals(goalArray);
+      setCurrentGoal(goalArray[0].goal);
+      
       };
 
       const moveToProfilePage = function(){

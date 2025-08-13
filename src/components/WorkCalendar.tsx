@@ -1,14 +1,27 @@
 "use client";
 import React, { useState } from "react";
-import { useDuartionInput,useAddGoalInput } from "@/store/store";
+import { useDuartionInput,useAddGoalInput , useGoalList,useCurrentGoal} from "@/store/store";
+
+
+
+
 
 export default function WorkCalendar() {
   // State for current year & month
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
+  
+
+
+
 
   const { displayDurationInput, hideDurationInput, showDurationInput } = useDuartionInput();
   const { displayGoalInput, showGoalInput, hideGoalInput } = useAddGoalInput();
+  const { goals} = useGoalList();
+  const {currentGoal}=useCurrentGoal();
+  
+
+
 
 
 
@@ -48,6 +61,7 @@ export default function WorkCalendar() {
     const clickedDate = new Date(currentYear, currentMonth, day);
     console.log(day);
     console.log(clickedDate.toLocaleString()); // Log date
+    
   }
 
   const daysInMonth = getDaysInMonth(currentYear, currentMonth);
@@ -78,7 +92,7 @@ export default function WorkCalendar() {
         
       </div>
 
-        <h1 className="text-4xl font-bold tracking-tighter text-gray-600 text-center m-4">Goal : </h1>
+        <h1 className="text-4xl font-bold tracking-tighter text-gray-600 text-center m-4">Goal : {currentGoal}</h1>
 
       </div>
       
