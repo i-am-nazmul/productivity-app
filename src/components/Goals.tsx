@@ -20,10 +20,7 @@ export default function Goals({ goals }: { goals: {
             hideDurationInput();
       }
 
-      const goalSetter = async function (goal:any){
-            // console.log(_id)
-            setCurrentGoal(goal);
-      }
+      
       
       return (
             <div className="flex flex-col justify-between h-full">
@@ -33,7 +30,7 @@ export default function Goals({ goals }: { goals: {
                               {goals.map((goalObj) => (
                               <li key={goalObj._id}>
                                     <button className="cursor-pointer w-full text-start px-6 py-2 rounded-sm font-semibold text-gray-700 text-2xl tracking-tighter hover:bg-amber-300 hover:text-black"
-                                    onClick={() => goalSetter(goalObj.goal)}>
+                                    onClick={() => setCurrentGoal(goalObj.goal)}>
                                     {goalObj.goal}
                                     </button>
                               </li>

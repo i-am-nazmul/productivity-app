@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { useDuartionInput,useAddGoalInput , useGoalList,useCurrentGoal} from "@/store/store";
+import { useDuartionInput,useAddGoalInput , useGoalList,useCurrentGoal,useCurrentDate} from "@/store/store";
 
 
 
@@ -19,6 +19,7 @@ export default function WorkCalendar() {
   const { displayGoalInput, showGoalInput, hideGoalInput } = useAddGoalInput();
   const { goals} = useGoalList();
   const {currentGoal}=useCurrentGoal();
+  const {currentDate,setCurrentDate} = useCurrentDate();
   
 
 
@@ -35,6 +36,8 @@ export default function WorkCalendar() {
     return new Date(currentYear, month).toLocaleString("default", { month: "long" });
   }
 
+
+  
   // Handle month navigation
   function handlePrevMonth() {
     if (currentMonth === 0) {
@@ -45,6 +48,8 @@ export default function WorkCalendar() {
     }
   }
 
+
+
   function handleNextMonth() {
     if (currentMonth === 11) {
       setCurrentMonth(0);
@@ -54,15 +59,19 @@ export default function WorkCalendar() {
     }
   }
 
+
+
   // Handle date click
   function handleDateClick(day: number) {
     showDurationInput();
     hideGoalInput();
     const clickedDate = new Date(currentYear, currentMonth, day);
-    console.log(day);
-    console.log(clickedDate.toLocaleString()); // Log date
-    
+    setCurrentDate(clickedDate);
   }
+
+
+
+
 
   const daysInMonth = getDaysInMonth(currentYear, currentMonth);
 

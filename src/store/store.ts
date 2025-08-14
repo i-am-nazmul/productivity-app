@@ -13,17 +13,12 @@ type Goal = {
 
 type GoalList = {
   goals: Goal[];
-  addGoal: (goal: Goal) => void;
   setGoals: (goals: Goal[]) => void;
 };
 
 
 const useGoalList = create<GoalList>((set) => ({
   goals: [],
-  addGoal: (goal) =>
-    set((state) => ({
-      goals: [...state.goals, goal],
-    })),
   setGoals: (goals) => set({ goals }),
 }));
 
@@ -83,6 +78,8 @@ const useDuartion = create<Duration>((set) => ({
 }));
 
 
+
+
 //current goal selected 
 type CurrentGoal = {
   currentGoal : string,
@@ -97,6 +94,20 @@ const useCurrentGoal = create<CurrentGoal>((set)=>({
 
 
 
+//current date selected 
+type CurrentDate = {
+  currentDate : Date,
+  setCurrentDate : (value : Date) => void ;
+}
+
+const useCurrentDate = create<CurrentDate>((set)=>({
+  currentDate : new Date(),
+  setCurrentDate : (value) =>set((state)=>({currentDate:value}))
+
+}))
 
 
-export {useGoalList,useAddGoalInput,useDuartionInput,useDuartion,useCurrentGoal}
+
+
+
+export {useGoalList,useAddGoalInput,useDuartionInput,useDuartion,useCurrentGoal,useCurrentDate}

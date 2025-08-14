@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import WorkCalendar from "@/components/WorkCalendar";
 import Goals from "@/components/Goals";
-import {useGoalList,useAddGoalInput,useDuartionInput,useCurrentGoal} from "@/store/store";
+import {useGoalList,useAddGoalInput,useDuartionInput,useCurrentGoal,useCurrentDate} from "@/store/store";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -11,10 +11,12 @@ import { useRouter } from "next/navigation";
 
 export default function DashboardPage(){
       const [newGoal,setNewGoal]=React.useState('');
-      const { goals, addGoal, setGoals } = useGoalList();
+      const [duration,setDuration] = React.useState(0);
+      const { goals, setGoals } = useGoalList();
       const { displayGoalInput, showGoalInput, hideGoalInput } = useAddGoalInput();
       const { displayDurationInput, hideDurationInput, showDurationInput } = useDuartionInput();
       const {currentGoal,setCurrentGoal}= useCurrentGoal();
+      const {currentDate} = useCurrentDate();
 
       const router = useRouter();
 
@@ -23,13 +25,14 @@ export default function DashboardPage(){
 //add a new goal 
       const addNewGoal = async function(){
 
-            hideGoalInput()
-            addGoal(newGoal);
+            hideGoalInput();
+            // addGoal(newGoal);
             setNewGoal("");
             try {
                   await axios.post('/api/new-goal',{
                         "newGoal" : newGoal
                   });
+                  allGoals();
                   console.log("New task has been added succesfully !!")
 
             } catch (error:any) {
@@ -38,6 +41,9 @@ export default function DashboardPage(){
 
 
       }
+
+
+
 
 // function for rendering all goals 
       const allGoals = async function () {
@@ -50,6 +56,33 @@ export default function DashboardPage(){
       setCurrentGoal(goalArray[0].goal);
       
       };
+
+
+
+
+
+      //function for saving the details of a goal 
+      const saveGoalDetails = async function (){
+            hideDurationInput();
+            console.log(currentGoal);
+            console.log(currentDate);
+            console.log(duration);
+            try {
+                  await axios.post('/api/goal-data',{
+                        "goalName" : currentGoal,
+                        "duration" : duration,
+                        "date" : currentDate
+                  });
+                  
+                  console.log("Data for the task is updated")
+
+            } catch (error:any) {
+                  console.log("Failed to add new error : ", error);
+            }
+      }
+
+
+
 
       const moveToProfilePage = function(){
             router.push('/profile')          ;
@@ -86,11 +119,12 @@ export default function DashboardPage(){
 
                                     {displayDurationInput && (
                                           <>
-                                                <input type="text" name="" placeholder="Enter duration in Hours" className="outline-none bg-amber-200 pr-8 py-2 pl-4 text-2xl rounded-sm"/>
+                                                <input type="number" name="" placeholder="Enter duration in Hours" className="outline-none bg-amber-200 pr-8 py-2 pl-4 text-2xl rounded-sm"
+                                                onChange={(e)=>{setDuration(Number(e.target.value))}}/>
 
                                                 <button className="bg-emerald-900 text-white 
                                                 rounded-sm cursor-pointer px-4 py-2 text-2xl " 
-                                                onClick={hideDurationInput}
+                                                onClick={saveGoalDetails}
                                                 >Add</button> 
                                           </>
                                     )}
