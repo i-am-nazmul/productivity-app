@@ -1,6 +1,7 @@
 "use client"
 import React, { useEffect } from "react";
 import WorkCalendar from "@/components/WorkCalendar";
+import Chart from "@/components/Chart";
 import Goals from "@/components/Goals";
 import {useGoalList,useAddGoalInput,useDuartionInput,useCurrentGoal,useCurrentDate} from "@/store/store";
 import axios from "axios";
@@ -58,15 +59,13 @@ export default function DashboardPage(){
       };
 
 
-
-
-
+      
       //function for saving the details of a goal 
       const saveGoalDetails = async function (){
             hideDurationInput();
-            console.log(currentGoal);
-            console.log(currentDate);
-            console.log(duration);
+            showGoalInput();
+            
+            
             try {
                   await axios.post('/api/goal-data',{
                         "goalName" : currentGoal,
@@ -161,6 +160,7 @@ export default function DashboardPage(){
 
                               <div className="w-2/5 h-full border border-gray-200 rounded-sm">
                                     <WorkCalendar/>
+                                    <Chart/>
                               </div>
 
 

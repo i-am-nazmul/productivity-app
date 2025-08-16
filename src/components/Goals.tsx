@@ -13,13 +13,6 @@ export default function Goals({ goals }: { goals: {
       const { displayGoalInput, showGoalInput, hideGoalInput } = useAddGoalInput();
       const { displayDurationInput, hideDurationInput, showDurationInput } = useDuartionInput();
       const {currentGoal,setCurrentGoal}=useCurrentGoal();
-
-
-      function addGoalButton(){
-            showGoalInput();
-            hideDurationInput();
-      }
-
       
       
       return (
@@ -28,18 +21,20 @@ export default function Goals({ goals }: { goals: {
                         <h1 className="text-4xl font-bold tracking-tighter text-gray-600 text-center m-4">Goals</h1>
                         <ul className="font-mono tracking-tight px-4 py-2 bg-amber-200 w-max rounded-sm">
                               {goals.map((goalObj) => (
-                              <li key={goalObj._id}>
+                              <li key={goalObj._id}
+                              className="flex ">
                                     <button className="cursor-pointer w-full text-start px-6 py-2 rounded-sm font-semibold text-gray-700 text-2xl tracking-tighter hover:bg-amber-300 hover:text-black"
                                     onClick={() => setCurrentGoal(goalObj.goal)}>
                                     {goalObj.goal}
                                     </button>
+                                    
                               </li>
                               ))}
                         </ul>
 
                   </div>
 
-                  <button className="font-mono tracking-tight bg-emerald-900 text-white cursor-pointer px-2" onClick={addGoalButton}>Add new goal</button>
+                  
             </div>
       )
 }

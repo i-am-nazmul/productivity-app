@@ -35,7 +35,7 @@ type GoalInput = {
 
 }
 const useAddGoalInput = create<GoalInput>((set)=>({
-  displayGoalInput : false ,
+  displayGoalInput : true ,
   hideGoalInput : () => set({displayGoalInput : false}),
   showGoalInput : () => set({displayGoalInput : true}),
 }));
@@ -108,6 +108,28 @@ const useCurrentDate = create<CurrentDate>((set)=>({
 
 
 
+//global dates with duration 
+type DateWithDuration = {
+  date: Date;
+  duration: number;
+};
+
+type DatesStore = {
+  datesWithDuration: DateWithDuration[];
+  setDatesWithDuration: (dates: DateWithDuration[]) => void;
+};
+
+const useDatesWithDuration = create<DatesStore>((set) => ({
+  datesWithDuration: [],
+
+  // this will overwrite old data completely
+  setDatesWithDuration: (dates) => set({ datesWithDuration: dates }),
+}));
 
 
-export {useGoalList,useAddGoalInput,useDuartionInput,useDuartion,useCurrentGoal,useCurrentDate}
+
+
+
+
+
+export {useGoalList,useAddGoalInput,useDuartionInput,useDuartion,useCurrentGoal,useCurrentDate,useDatesWithDuration}

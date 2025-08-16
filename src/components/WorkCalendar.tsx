@@ -1,6 +1,7 @@
 "use client";
-import React, { useState } from "react";
-import { useDuartionInput,useAddGoalInput , useGoalList,useCurrentGoal,useCurrentDate} from "@/store/store";
+import React, { useEffect, useState } from "react";
+import { useDuartionInput,useAddGoalInput , useGoalList,useCurrentGoal,useCurrentDate,useDatesWithDuration} from "@/store/store";
+import axios from "axios";
 
 
 
@@ -10,6 +11,9 @@ export default function WorkCalendar() {
   // State for current year & month
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
+  const [datesToHighlight, setDatesToHighlight] = useState<Date[]>([]);
+
+
   
 
 
@@ -20,6 +24,7 @@ export default function WorkCalendar() {
   const { goals} = useGoalList();
   const {currentGoal}=useCurrentGoal();
   const {currentDate,setCurrentDate} = useCurrentDate();
+  const {datesWithDuration,setDatesWithDuration} = useDatesWithDuration();
   
 
 
@@ -35,8 +40,6 @@ export default function WorkCalendar() {
   function getMonthName(month: number) {
     return new Date(currentYear, month).toLocaleString("default", { month: "long" });
   }
-
-
   
   // Handle month navigation
   function handlePrevMonth() {
@@ -68,6 +71,44 @@ export default function WorkCalendar() {
     const clickedDate = new Date(currentYear, currentMonth, day);
     setCurrentDate(clickedDate);
   }
+
+
+    function isDateHighlighted(day: number) {
+    const dateToCheck = new Date(currentYear, currentMonth, day).toDateString();
+    for (let i = 0; i < datesToHighlight.length; i++) {
+      const element = datesToHighlight[i];
+      if(dateToCheck === element.toDateString()){
+        return 1;
+      }
+      
+    }
+    return 0;
+    }
+
+  const fetchGoalData = async function (){
+    const goalDataRequest =await axios.get(`/api/get-goal-data?goal=${currentGoal}`);
+    const goalData = goalDataRequest.data.goalData;
+    const datesAndDuration = goalData.map((item : any )=>({
+      date : new Date (item.date),
+      duration : item.duration 
+    }))
+
+    setDatesWithDuration(datesAndDuration);
+
+
+
+    const dates = datesAndDuration.map((item:any)=>new Date(item.date));
+    setDatesToHighlight(dates);
+
+    }
+
+
+
+
+  useEffect(() => { 
+  if (!currentGoal) return; 
+  fetchGoalData();
+}, [currentGoal,displayDurationInput]); // dependency array
 
 
 
@@ -112,7 +153,7 @@ export default function WorkCalendar() {
           <div
             key={index}
             onClick={() => handleDateClick(index + 1)}
-            className="w-12 h-12 flex items-center justify-center hover:bg-gray-500 hover:text-white text-gray-700 font-bold text-2xl font-sans rounded-full cursor-pointer border border-gray-300"
+            className={`w-12 h-12 flex items-center justify-center hover:bg-gray-500 hover:text-white text-gray-700 font-bold text-2xl font-sans rounded-full cursor-pointer border border-gray-300 ${isDateHighlighted(index+1) ? "bg-emerald-900 text-white" : "hover:bg-gray-500 hover:text-white text-gray-700"}`}
           >
             {index + 1}
           </div>
@@ -121,4 +162,3 @@ export default function WorkCalendar() {
     </div>
   );
 }
-
