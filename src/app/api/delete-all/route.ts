@@ -1,6 +1,7 @@
 import { connect } from "@/dbconfig/dbconfig";
 import Goals from "@/models/goals.models";
 import Users from "@/models/users.models";
+import GoalData from "@/models/goaldata.models";
 import { NextResponse } from "next/server";
 
 export async function DELETE() {
@@ -8,7 +9,8 @@ export async function DELETE() {
 
   try {
     await Goals.collection.drop();
-    await Users.collection.drop();
+    await GoalData.collection.drop();
+    
 
     return NextResponse.json({
       message: "Everything deleted successfully!"

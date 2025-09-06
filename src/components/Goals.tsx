@@ -17,9 +17,9 @@ export default function Goals({ goals }: { goals: {
       
       return (
             <div className="flex flex-col justify-between h-full">
-                  <div>
+                  <div >
                         <h1 className="text-4xl font-bold tracking-tighter text-gray-600 text-center m-4">Goals</h1>
-                        <ul className="font-mono tracking-tight px-4 py-2 bg-amber-200 w-max rounded-sm">
+                        {goals && goals.length ? <ul className="font-mono tracking-tight px-4 py-2 bg-amber-200 w-max rounded-sm">
                               {goals.map((goalObj) => (
                               <li key={goalObj._id}
                               className="flex ">
@@ -30,7 +30,7 @@ export default function Goals({ goals }: { goals: {
                                     
                               </li>
                               ))}
-                        </ul>
+                        </ul>  : <h1 className="text-2xl font-bold tracking-tighter bg-amber-200 max-w-max text-gray-600 text-center px-4 font-mono">Please add your Goals</h1>}
 
                   </div>
 

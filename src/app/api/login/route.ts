@@ -6,13 +6,14 @@ import jwt from 'jsonwebtoken';
 
 export async function POST(request:NextRequest) {
 
-
   await connect();
+  console.log("DB connected");
+
 
   try {    
     const requestBody = await request.json();
     const {email,password} = requestBody;
-    const existingUser = await Users.findOne({email});
+    const existingUser = await Users.findOne({email : email});
 
     if(!existingUser){
       return NextResponse.json({message : "User not found !! Please Sign up"},{status : 409})

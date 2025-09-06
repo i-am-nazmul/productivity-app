@@ -26,8 +26,7 @@ export default function DashboardPage(){
 //add a new goal 
       const addNewGoal = async function(){
 
-            hideGoalInput();
-            // addGoal(newGoal);
+            // hideGoalInput();
             setNewGoal("");
             try {
                   await axios.post('/api/new-goal',{
@@ -48,30 +47,46 @@ export default function DashboardPage(){
 
 // function for rendering all goals 
       const allGoals = async function () {
-      const response = await axios.get('/api/get-goals');
-      const goalArray = response.data.goals;
-    
+      try {
+      const response = await axios.get("/api/get-goals");
 
-      // Replace state instead of appending
-      setGoals(goalArray);
-      setCurrentGoal(goalArray[0].goal);
-      
+      if (response.data && response.data.goals) {
+            const goalArray = response.data.goals;
+
+
+            setGoals(goalArray);
+
+            if (goalArray.length > 0) {
+            setCurrentGoal(goalArray[0].goal);
+            } else {
+            setCurrentGoal("");
+            }
+      }
+      } catch (error) {
+      console.error("Failed to fetch goals:", error);
+      }
       };
 
 
       
       //function for saving the details of a goal 
       const saveGoalDetails = async function (){
-            hideDurationInput();
-            showGoalInput();
+            
             
             
             try {
-                  await axios.post('/api/goal-data',{
+                  const request = await axios.post('/api/goal-data',{
                         "goalName" : currentGoal,
                         "duration" : duration,
                         "date" : currentDate
                   });
+
+                  if(request.status === 201){
+                        console.log("Data for the task is updated")
+                        hideDurationInput();
+                        showGoalInput();
+
+                  }
                   
                   console.log("Data for the task is updated")
 

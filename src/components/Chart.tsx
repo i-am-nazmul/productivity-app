@@ -1,86 +1,82 @@
-  import React from 'react';
-  import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-  import { useDatesWithDuration } from '@/store/store';
+import React from 'react';
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from 'recharts';
+import { useDatesWithDuration } from '@/store/store';
 
-  const data = [
-    {
-      name: 'Page A',
-      uv: 40,
-      pv: 2400,
-      amt: 2400,
-    },
-    {
-      name: 'Page B',
-      uv: 30,
-      pv: 1398,
-      amt: 2210,
-    },
-    {
-      name: 'Page C',
-      uv: 20,
-      pv: 9800,
-      amt: 2290,
-    },
-    {
-      name: 'Page D',
-      uv: 0,
-      pv: 3908,
-      amt: 2000,
-    },
-    {
-      name: 'Page E',
-      uv: 18,
-      pv: 4800,
-      amt: 2181,
-    },
-    {
-      name: 'Page F',
-      uv: 23,
-      pv: 3800,
-      amt: 2500,
-    },
-    {
-      name: 'Page G',
-      uv: 34,
-      pv: 4300,
-      amt: 2100,
-    },
-  ];
+const Chart = () => {
+  const { datesWithDuration } = useDatesWithDuration();
+
+  // Sort by date
+  const sortedDates = [...datesWithDuration].sort(
+    (a, b) => a.date.getTime() - b.date.getTime()
+  );
+
+  let data: any = [];
+
+  // Get Nth date from today (negative means past)
+  function getNthDateFromToday(n: number): Date {
+    const today = new Date();
+    today.setDate(today.getDate() + n);
+    return today;
+  }
+
+  // Build data for the last 7 days
+  for (let i = 0; i < 7; i++) {
+    const targetDate = getNthDateFromToday(-i);
+
+    // Try to find entry for this date
+    const entry = sortedDates.find(
+      (obj) => obj.date.toDateString() === targetDate.toDateString()
+    );
+
+    // If found, push it; otherwise, push duration = 0
+    data.push({
+      date: targetDate.toLocaleDateString(),
+      duration: entry ? entry.duration : 0,
+    });
+  }
+
+
+  data.reverse();
 
   
 
+  return (
+    <div style={{ width: '100%' }} className='mt-8'>
+      <h4 className="text-3xl font-semibold tracking-tighter text-gray-600 text-center m-4">Progress over last 7 days</h4>
+      <ResponsiveContainer width="100%" height={200}>
+        <AreaChart
+          width={500}
+          height={200}
+          data={data} // <-- use processed data here
+          margin={{
+            top: 10,
+            right: 30,
+            left: 0,
+            bottom: 0,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="date" />
+          <YAxis />
+          <Tooltip />
+          <Area
+            type="monotone"
+            dataKey="duration" // <-- Y-axis value
+            stroke="#8884d8"
+            fill="#8884d8"
+          />
+        </AreaChart>
+      </ResponsiveContainer>
+    </div>
+  );
+};
 
-  const Chart = () => {
-    const {datesWithDuration} = useDatesWithDuration();
-    console.log(datesWithDuration)
-    return (
-        <div style={{ width: '100%' }}>
-          <h4>A demo of synchronized AreaCharts</h4>
-          <ResponsiveContainer width="100%" height={200}>
-            <AreaChart
-              width={500}
-              height={200}
-              data={data}
-              syncId="anyId"
-              margin={{
-                top: 10,
-                right: 30,
-                left: 0,
-                bottom: 0,
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Area type="monotone" dataKey="uv" stroke="#8884d8" fill="#8884d8" />
-            </AreaChart>
-          </ResponsiveContainer>
-          
-
-          
-        </div>
-      );
-  };
-
-  export default Chart;
+export default Chart;

@@ -27,6 +27,10 @@ export default function SignupPage(){
                   console.error("Signup error");
             }
       };
+      const Login = () =>{
+            router.push('/login');
+            
+      }
 
 
 
@@ -38,23 +42,25 @@ export default function SignupPage(){
                                     SignUp
                               </h1>
                         </div>
-                        <div className="flex flex-col gap-2 font-mono justify-center items-center w-full h-full tracking-tighter">
+                        <div className="flex flex-col gap-2 font-mono justify-center items-center w-full h-full ">
 
                               <input type="text" 
                               placeholder="Enter the username" 
-                              className="outline-none text-2xl px-4 py-2 bg-amber-200 rounded-xs text-black border border-gray-400"
+                              className="outline-none text-2xl px-4 py-2 bg-amber-200 rounded-sm text-black border border-gray-400 tracking-tighter"
                               onChange={(e)=>{setUsername(e.target.value)}} />
 
-                              <input type="text" placeholder="Enter the email" className="outline-none text-2xl px-4 py-2 bg-amber-200 rounded-xs text-black border border-gray-400"
+                              <input type="text" placeholder="Enter the email" className="outline-none text-2xl px-4 py-2 bg-amber-200 rounded-sm text-black border tracking-tighter border-gray-400"
                               onChange={(e)=>{setEmail(e.target.value)}}/>
 
 
                               <input type="text" 
-                              placeholder="Enter the password" className="outline-none text-2xl px-4 py-2 bg-amber-200 rounded-xs text-black border border-gray-400"
+                              placeholder="Enter the password" className="outline-none tracking-tighter text-2xl px-4 py-2 bg-amber-200 rounded-sm text-black border border-gray-400"
                               onChange={(e)=>{setPassword(e.target.value)}}/>
 
-                              <button className="bg-emerald-800 px-4 py-1 text-white text-4xl cursor-pointer hover:bg-emerald-900"
+                              <button className="bg-emerald-800 px-4 py-1 text-white text-4xl tracking-tighter cursor-pointer hover:bg-emerald-900 rounded-sm"
                               onClick={Signup}>Signup</button>
+
+                              <button className="bg-emerald-800 text-white px-4 font-sans py-1 mt-4 cursor-pointer hover:bg-emerald-900 rounded-xs " onClick={Login}>Already have an account ? Login Instead</button>
                         </div>
                   </div>
             </div>

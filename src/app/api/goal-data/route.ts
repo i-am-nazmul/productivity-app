@@ -29,7 +29,7 @@ export async function POST(request:NextRequest) {
       date : date })
 
     return NextResponse.json({message : "Data updated successfully"},
-      {status : 200}
+      {status : 201}
     );
 
 

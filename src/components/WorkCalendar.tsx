@@ -5,8 +5,6 @@ import axios from "axios";
 
 
 
-
-
 export default function WorkCalendar() {
   // State for current year & month
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
@@ -14,7 +12,6 @@ export default function WorkCalendar() {
   const [datesToHighlight, setDatesToHighlight] = useState<Date[]>([]);
 
 
-  
 
 
 
@@ -85,6 +82,8 @@ export default function WorkCalendar() {
     return 0;
     }
 
+
+
   const fetchGoalData = async function (){
     const goalDataRequest =await axios.get(`/api/get-goal-data?goal=${currentGoal}`);
     const goalData = goalDataRequest.data.goalData;
@@ -97,7 +96,7 @@ export default function WorkCalendar() {
 
 
 
-    const dates = datesAndDuration.map((item:any)=>new Date(item.date));
+    const dates = goalData.map((item:any)=>new Date(item.date));
     setDatesToHighlight(dates);
 
     }
@@ -108,6 +107,7 @@ export default function WorkCalendar() {
   useEffect(() => { 
   if (!currentGoal) return; 
   fetchGoalData();
+  console.log("Hello bhai , mai goal data laya hu ");
 }, [currentGoal,displayDurationInput]); // dependency array
 
 
