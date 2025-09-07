@@ -12,7 +12,7 @@ export async function POST(request:NextRequest) {
     const {username,email,password} = requestBody;
     const existingUser = await Users.findOne({email});
     if(existingUser){
-      return NextResponse.json({message : "The email is already in use !!"},{status : 409})
+      return NextResponse.json({message : "Signup failed. Please try again wit different information."},{status : 400})
     }
     const user = await Users.create({username,email,password});
 
@@ -31,12 +31,16 @@ export async function POST(request:NextRequest) {
       message : "Signed up successfully!!"
     },{status : 201});
     response.cookies.set("token",token,{
-      httpOnly : true
+      httpOnly : true,
+      secure : true,
+      sameSite : 'strict'
+
     });
     return response;
 
 
   } catch (error:any) {
-    return NextResponse.json({ status: 'error', error: (error as Error).message }, { status: 500 });
+    console.log(error)
+    return NextResponse.json({message : "Internal error occured"} ,{ status: 500 });
   }
 }

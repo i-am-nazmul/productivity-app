@@ -12,15 +12,16 @@ export async function GET(request : NextRequest){
             const token = request.cookies.get("token")?.value;
 
       if (!token) {
-            return NextResponse.json({ message: "Unauthorized. No token provided." }, { status: 401 });
+            return NextResponse.json({ message: "Unauthorised." }, { status: 401 });
       }
       const decodedToken: any = jwt.verify(token, process.env.TOKEN_SECRET!);
       const userGoals = await Goals.find({owner : decodedToken.id});
       return NextResponse.json({ goals: userGoals }, { status: 200 });
 
       } catch (error:any) {
+            console.log("Error while fetching goals : ",error);
             return NextResponse.json({
-                  error:error.message
+                  message : "Failed to get the goals."
             },{status : 500})
       }
 }

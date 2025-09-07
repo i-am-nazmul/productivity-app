@@ -10,23 +10,34 @@ export async function POST(request:NextRequest) {
   try {    
     const token = request.cookies.get("token")?.value;
     if (!token) {
-      return NextResponse.json({ message: "Unauthorized. No token provided." }, { status: 401 });
+      return NextResponse.json({ message: "Failed to add goal data." }, { status: 401 });
     }
     const decodedToken: any = jwt.verify(token, process.env.TOKEN_SECRET!);
 
 
     const requestBody = await request.json();
     const {goalName,duration,date} = requestBody;
-    const goal = await Goals.findOne({goal : goalName});
-
-    if (!goal) {
-      return NextResponse.json({ message: "No such goal exists" }, { status: 401 });
+    if(!goalName || duration <= 0 || typeof goalName!=='string'  || !date){
+      console.error("Either invalid duration or goalname or date.");
+      return NextResponse.json({message : "Failed to add goal data."},{
+        status : 400
+      })
     }
+    const goal = await Goals.findOne({owner : decodedToken.id ,goal : goalName.trim()});
+
+    if(!goal){
+      console.error("No such goal exists");
+      return NextResponse.json({
+        message : "Failed to add goal data."
+      },{
+        status : 400
+      })
+    };
 
 
     await GoalData.create({goal : goal._id,
-      duration : duration,
-      date : date })
+      duration : Number(duration),
+      date : new Date(date) });
 
     return NextResponse.json({message : "Data updated successfully"},
       {status : 201}
@@ -34,6 +45,7 @@ export async function POST(request:NextRequest) {
 
 
   } catch (error:any) {
-    return NextResponse.json({ status: 'error', error: (error as Error).message }, { status: 500 });
+    console.error("Error in the goal-data API : ",error);
+    return NextResponse.json({ message : "Failed to add goal data." }, { status: 500 });
   }
 }

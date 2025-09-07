@@ -53,7 +53,7 @@ export default function SignupPage(){
                               onChange={(e)=>{setEmail(e.target.value)}}/>
 
 
-                              <input type="text" 
+                              <input type="password" 
                               placeholder="Enter the password" className="outline-none tracking-tighter text-2xl px-4 py-2 bg-amber-200 rounded-sm text-black border border-gray-400"
                               onChange={(e)=>{setPassword(e.target.value)}}/>
 

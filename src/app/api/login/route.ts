@@ -7,8 +7,6 @@ import jwt from 'jsonwebtoken';
 export async function POST(request:NextRequest) {
 
   await connect();
-  console.log("DB connected");
-
 
   try {    
     const requestBody = await request.json();
@@ -16,11 +14,13 @@ export async function POST(request:NextRequest) {
     const existingUser = await Users.findOne({email : email});
 
     if(!existingUser){
-      return NextResponse.json({message : "User not found !! Please Sign up"},{status : 409})
+      console.error("No such user exists");
+      return NextResponse.json({message : "Failed to login."},{status : 401})
     }
     
     if(existingUser.password !== password){
-      return NextResponse.json({message : "Invalid Password !!"},{status : 409})
+      console.error("Invalid password");
+      return NextResponse.json({message : "Failed to login."},{status : 401})
     }
 
     const token = jwt.sign(
@@ -38,12 +38,14 @@ export async function POST(request:NextRequest) {
       message : "Logged in successfully!!"
     },{status : 200});
     response.cookies.set("token",token,{
-      httpOnly : true
+      httpOnly : true,
+      secure : true 
     });
     return response;
 
 
   } catch (error:any) {
-    return NextResponse.json({ status: 'error', error: (error as Error).message }, { status: 500 });
+    console.error(error);
+    return NextResponse.json({ message : "Failed to login." }, { status: 500 });
   }
 }

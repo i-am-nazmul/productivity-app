@@ -13,42 +13,42 @@ export async function GET(request : NextRequest){
             const token = request.cookies.get("token")?.value;
 
       if (!token) {
-            return NextResponse.json({ message: "Unauthorized. No token provided." }, { status: 401 });
+            console.error("Unauthorised");
+            return NextResponse.json({ message: "Failed to fetch the goal data." }, { status: 401 });
       }
 
 
       const decodedToken: any = jwt.verify(token, process.env.TOKEN_SECRET!);
 
-      const userGoals = await Goals.find({owner : decodedToken.id});
       const {searchParams} = new URL(request.url);
       const goal = searchParams.get("goal");
-      // const date = searchParams.get("date");;
+      
+      if (!goal ) {
+            console.error("Failed to get the goal from the url");
 
-      // if (!goal || !date) {
-      // return NextResponse.json({ message: "Missing goal or date" }, { status: 400 });
-      // }
+      return NextResponse.json({ message: "Failed to fetch the goal data" }, { status: 400 });
+      }
 
-      let goalId ;
-
-      for (let i = 0; i < userGoals.length; i++) {
-            const element = userGoals[i];
-            if(element.goal === goal){
-                  goalId = element._id;
-
-            }
-            
+      const userGoal = await Goals.findOne({owner : decodedToken.id,goal:goal});
+      if(!userGoal){
+            console.error("No goals exists");
+            return NextResponse.json({message : "Failed to fetch the goal data."},{status : 400})
       }
 
 
-      const dataForEachGoal = await GoalData.find({goal:goalId})
+
+      const dataForEachGoal = await GoalData.find({goal:userGoal._id})
 
 
 
       return NextResponse.json({ goalData: dataForEachGoal }, { status: 200 });
 
       } catch (error:any) {
+            console.error("Error while fetching the goal data");
+
             return NextResponse.json({
-                  error:error.message
+                  
+                  message:"Failed to fetch the goal data."
             },{status : 500})
       }
 }

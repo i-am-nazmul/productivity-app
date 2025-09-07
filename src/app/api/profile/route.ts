@@ -7,30 +7,33 @@ export async function GET(request: NextRequest) {
   await connect();
 
   try {
-    // 1. Get the token from cookies
+    // Get the token from cookies
     const token = request.cookies.get("token")?.value;
 
     if (!token) {
-      return NextResponse.json({ message: "Unauthorized. No token provided." }, { status: 401 });
+      console.error("Unauthorised");
+      return NextResponse.json({ message: "Failed" }, { status: 401 });
     }
 
-    // 2. Verify the token
+    // verify the token
     const decodedToken: any = jwt.verify(token, process.env.TOKEN_SECRET!);
 
-    // 3. Find the user by ID
+    // find the user by ID
     const user = await Users.findById(decodedToken.id).select("username email");
 
     if (!user) {
-      return NextResponse.json({ message: "User not found." }, { status: 404 });
+      console.error("No such user exists");
+      return NextResponse.json({ message: "Failed" }, { status: 404 });
     }
 
     // 4. Return username and email
     return NextResponse.json({
       username: user.username,
       email: user.email,
-    });
+    },{status:200});
 
   } catch (error: any) {
-    return NextResponse.json({ message: "Invalid or expired token", error: error.message }, { status: 401 });
+    console.error("Invalid or expired token. Please login.");
+    return NextResponse.json({ message: "Failed", error: error.message }, { status: 401 });
   }
 }

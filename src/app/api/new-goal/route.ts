@@ -16,18 +16,24 @@ export async function POST(request:NextRequest) {
 
     const requestBody = await request.json();
     const {newGoal} = requestBody;
+    if(!newGoal || newGoal===""){
+      return NextResponse.json({
+        message : "Bad Request"
+      },{status:400})
+    }
     const newGoalObject = new Goals({
       owner : decodedToken.id,
-      goal : newGoal
+      goal : newGoal.trim()
     })
     await newGoalObject.save();
 
     return NextResponse.json({
       message : "New goal has been added successfully!!",
       data : newGoalObject
-    });
+    },{status:201});
 
   } catch (error:any) {
-    return NextResponse.json({ status: 'error', error: (error as Error).message }, { status: 500 });
+    console.error(error);
+    return NextResponse.json({ message : "Failed to add." }, { status: 500 });
   }
 }
