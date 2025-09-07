@@ -3,6 +3,8 @@ import React, { useEffect } from "react";
 import WorkCalendar from "@/components/WorkCalendar";
 import Chart from "@/components/Chart";
 import Goals from "@/components/Goals";
+import AddNewGoal from "@/components/AddNewGoal";
+import AddGoalData from "@/components/AddGoalData";
 import {useGoalList,useAddGoalInput,useDuartionInput,useCurrentGoal,useCurrentDate} from "@/store/store";
 import axios from "axios";
 import Image from "next/image";
@@ -18,7 +20,6 @@ export default function DashboardPage(){
       const { displayDurationInput, hideDurationInput, showDurationInput } = useDuartionInput();
       const {currentGoal,setCurrentGoal}= useCurrentGoal();
       const {currentDate} = useCurrentDate();
-
       const router = useRouter();
 
 
@@ -43,8 +44,6 @@ export default function DashboardPage(){
       }
 
 
-
-
 // function for rendering all goals 
       const allGoals = async function () {
       try {
@@ -66,7 +65,6 @@ export default function DashboardPage(){
       console.error("Failed to fetch goals:", error);
       }
       };
-
 
       
       //function for saving the details of a goal 
@@ -96,8 +94,6 @@ export default function DashboardPage(){
       }
 
 
-
-
       const moveToProfilePage = function(){
             router.push('/profile')          ;
             }
@@ -114,7 +110,7 @@ export default function DashboardPage(){
                   <div className="w-full h-full rounded-sm border border-gray-400 flex flex-col px-4 py-2">
 
                         
-                        {/* Top Navbar like  */}
+                        {/* Top Navbar */}
                         <div className="flex justify-between ">
                               <h1 className="text-7xl font-bold text-gray-700 tracking-tighter">Dashboard</h1>
 
@@ -122,25 +118,11 @@ export default function DashboardPage(){
                                     
 
                                     {displayGoalInput && (
-                                          <>
-                                                <input type="text" name="" value={newGoal} onChange={(e)=>{setNewGoal(e.target.value)}} placeholder="Enter the new Goal" className="outline-none bg-amber-200 pr-8 py-2 pl-4 text-2xl rounded-sm"/>
-
-                                                <button className="bg-emerald-900 text-white 
-                                                rounded-sm cursor-pointer px-4 py-2 text-2xl " onClick={addNewGoal}
-                                                >Add</button>
-                                          </>
+                                          <AddNewGoal newGoal={newGoal} setNewGoal={setNewGoal} addNewGoal={addNewGoal}/>
                                     )}
 
                                     {displayDurationInput && (
-                                          <>
-                                                <input type="number" name="" placeholder="Enter duration in Hours" className="outline-none bg-amber-200 pr-8 py-2 pl-4 text-2xl rounded-sm"
-                                                onChange={(e)=>{setDuration(Number(e.target.value))}}/>
-
-                                                <button className="bg-emerald-900 text-white 
-                                                rounded-sm cursor-pointer px-4 py-2 text-2xl " 
-                                                onClick={saveGoalDetails}
-                                                >Add</button> 
-                                          </>
+                                          <AddGoalData setDuration={setDuration} saveGoalDetails={saveGoalDetails}/>
                                     )}
 
                                     <Image src="/download.png"

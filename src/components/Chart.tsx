@@ -55,7 +55,7 @@ const Chart = () => {
         <AreaChart
           width={500}
           height={200}
-          data={data} // <-- use processed data here
+          data={data} // 
           margin={{
             top: 10,
             right: 30,
