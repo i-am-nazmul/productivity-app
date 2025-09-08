@@ -2,25 +2,24 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 export function middleware(req: NextRequest) {
-  const token = req.cookies.get('token')?.value
+  const token = req.cookies.get('token')?.value;
+  const {pathname} = req.nextUrl;
+  const isPublicPath = pathname.startsWith('/login') || pathname.startsWith('/signup');
 
-  // List of paths you want to protect
-  const protectedPaths = ['/dashboard','/profile']
 
-  const isProtected = protectedPaths.some((path) =>
-    req.nextUrl.pathname.startsWith(path)
-  )
-
-  // If trying to access protected page without token, redirect to login
-  if (isProtected && !token) {
+  if ( !isPublicPath && !token) {
     return NextResponse.redirect(new URL('/login', req.url))
   }
+  if ( isPublicPath && token) {
+    return NextResponse.redirect(new URL('/dashboard', req.url))
+  }
 
-  // Otherwise, continue normally
   return NextResponse.next()
 }
 
-// Tell Next.js which paths to run middleware on
-export const config = {
-  matcher: ['/dashboard/:path*','/profile/:path*'], // apply middleware to /dashboard and its subpaths
+// Tell Nextjs which paths to run middleware on
+export const config = {  
+  matcher: [
+    '/((?!api|_next/static|_next/image|favicon.ico|login|signup).*)'
+  ],
 }
