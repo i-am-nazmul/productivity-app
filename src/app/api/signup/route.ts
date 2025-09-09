@@ -2,6 +2,7 @@ import { connect } from '@/dbconfig/dbconfig';
 import Users from '@/models/users.models';
 import { NextResponse,NextRequest } from 'next/server';
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 
 
 export async function POST(request:NextRequest) {
@@ -14,7 +15,9 @@ export async function POST(request:NextRequest) {
     if(existingUser){
       return NextResponse.json({message : "Signup failed. Please try again wit different information."},{status : 400})
     }
-    const user = await Users.create({username,email,password});
+    const hashedPassword = await bcrypt.hash(password,10);
+
+    const user = await Users.create({username,email,password : hashedPassword});
 
     const token = jwt.sign(
       {
@@ -33,14 +36,17 @@ export async function POST(request:NextRequest) {
     response.cookies.set("token",token,{
       httpOnly : true,
       secure : true,
-      sameSite : 'strict'
+      sameSite : 'strict',
+      maxAge : 60*60*24,
+      path : "/"
+
 
     });
     return response;
 
 
   } catch (error:any) {
-    console.log(error)
+    console.error(error)
     return NextResponse.json({message : "Internal error occured"} ,{ status: 500 });
   }
 }

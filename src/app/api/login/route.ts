@@ -2,6 +2,7 @@ import { connect } from '@/dbconfig/dbconfig';
 import Users from '@/models/users.models';
 import { NextResponse,NextRequest } from 'next/server';
 import jwt from 'jsonwebtoken';
+import bcrypt from "bcrypt"
 
 
 export async function POST(request:NextRequest) {
@@ -11,14 +12,16 @@ export async function POST(request:NextRequest) {
   try {    
     const requestBody = await request.json();
     const {email,password} = requestBody;
+
     const existingUser = await Users.findOne({email : email});
 
     if(!existingUser){
       console.error("No such user exists");
       return NextResponse.json({message : "Failed to login."},{status : 401})
     }
+    const isPasswordMatched = await bcrypt.compare(password,existingUser.password);
     
-    if(existingUser.password !== password){
+    if(!isPasswordMatched){
       console.error("Invalid password");
       return NextResponse.json({message : "Failed to login."},{status : 401})
     }
@@ -39,7 +42,9 @@ export async function POST(request:NextRequest) {
     },{status : 200});
     response.cookies.set("token",token,{
       httpOnly : true,
-      secure : true 
+      secure : true ,
+      maxAge : 60*60*24,
+      path : "/"
     });
     return response;
 

@@ -10,6 +10,7 @@ export async function DELETE() {
   try {
     await Goals.collection.drop();
     await GoalData.collection.drop();
+    await Users.collection.drop();
     
 
     return NextResponse.json({

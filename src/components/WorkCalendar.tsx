@@ -115,6 +115,7 @@ export default function WorkCalendar() {
 
 
   const daysInMonth = getDaysInMonth(currentYear, currentMonth);
+  // console.log("current goal hai ",currentGoal)
 
   return (
     <div className="px-6">
@@ -142,7 +143,7 @@ export default function WorkCalendar() {
         
       </div>
 
-        <h1 className="text-4xl font-bold tracking-tighter text-gray-600 text-center m-4">Goal : {currentGoal}</h1>
+        {!currentGoal ?<h1 className="text-4xl font-bold tracking-tighter text-gray-600 text-center m-4">Please add goals</h1> : <h1 className="text-4xl font-bold tracking-tighter text-gray-600 text-center m-4">Goal : {currentGoal}</h1>}
 
       </div>
       
