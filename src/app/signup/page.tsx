@@ -2,6 +2,8 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useIsLoading } from "@/store/store";
+import Loader from "@/components/Loader";
 
 
 
@@ -9,10 +11,11 @@ export default function SignupPage(){
       const [username,setUsername]=React.useState('');
       const [email,setEmail]=React.useState('');
       const [password,setPassword]=React.useState('');
-                  const router = useRouter();
+      const {isLoading,setIsLoading}=useIsLoading();
+      const router = useRouter();
 
       const Signup = async () => {
-
+            setIsLoading(true);
             try {
             const request = await axios.post('/api/signup', {
                   username,
@@ -26,6 +29,7 @@ export default function SignupPage(){
             } catch (error: any) {
                   console.error("Signup error");
             }
+            
       };
       const Login = () =>{
             router.push('/login');
@@ -36,7 +40,7 @@ export default function SignupPage(){
 
       return(
             <div className="h-screen w-screen p-1">
-                  <div className="w-full h-full rounded-sm border border-gray-400 flex flex-col px-4 py-2 items-center">
+                  {isLoading ? <Loader message={"Wait"}/>:<div className="w-full h-full rounded-sm border border-gray-400 flex flex-col px-4 py-2 items-center">
                         <div className="w-full">
                               <h1 className="text-7xl font-bold text-gray-700 tracking-tighter">
                                     SignUp
@@ -62,7 +66,7 @@ export default function SignupPage(){
 
                               <button className="bg-emerald-800 text-white px-4 font-sans py-1 mt-4 cursor-pointer hover:bg-emerald-900 rounded-xs " onClick={Login}>Already have an account ? Login Instead</button>
                         </div>
-                  </div>
+                  </div>}
             </div>
       )
 

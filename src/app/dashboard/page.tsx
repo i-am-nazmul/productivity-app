@@ -5,10 +5,11 @@ import Chart from "@/components/Chart";
 import Goals from "@/components/Goals";
 import AddNewGoal from "@/components/AddNewGoal";
 import AddGoalData from "@/components/AddGoalData";
-import {useGoalList,useAddGoalInput,useDuartionInput,useCurrentGoal,useCurrentDate} from "@/store/store";
+import {useGoalList,useAddGoalInput,useDuartionInput,useCurrentGoal,useCurrentDate,useIsLoading} from "@/store/store";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import Loader from "@/components/Loader";
 
 
 
@@ -20,14 +21,17 @@ export default function DashboardPage(){
       const { displayDurationInput, hideDurationInput, showDurationInput } = useDuartionInput();
       const {currentGoal,setCurrentGoal}= useCurrentGoal();
       const {currentDate} = useCurrentDate();
+      const {isLoading,setIsLoading}=useIsLoading();
+      const defaultMessage = 'Please wait while we fetch your data';
+      const [loaderMessage,setLoaderMessage]=React.useState(defaultMessage);
       const router = useRouter();
 
 
 
 //add a new goal 
       const addNewGoal = async function(){
-
-            // hideGoalInput();
+            setLoaderMessage('Adding your goal');
+            setIsLoading(true);
             setNewGoal("");
             try {
                   await axios.post('/api/new-goal',{
@@ -40,12 +44,13 @@ export default function DashboardPage(){
                   console.log("Failed to add new error : ", error);
             }
 
-
+            setIsLoading(false);
       }
 
 
 // function for rendering all goals 
       const allGoals = async function () {
+            setIsLoading(true);
       try {
       const response = await axios.get("/api/get-goals");
 
@@ -64,14 +69,16 @@ export default function DashboardPage(){
       } catch (error) {
       console.error("Failed to fetch goals:", error);
       }
+      setIsLoading(false);
       };
 
       
       //function for saving the details of a goal 
       const saveGoalDetails = async function (){
+
             
-            
-            
+            setLoaderMessage('Adding your progress');
+            setIsLoading(true);
             try {
                   const request = await axios.post('/api/goal-data',{
                         "goalName" : currentGoal,
@@ -91,6 +98,7 @@ export default function DashboardPage(){
             } catch (error:any) {
                   console.log("Failed to add new error : ", error);
             }
+            setIsLoading(false);
       }
 
 
@@ -101,13 +109,15 @@ export default function DashboardPage(){
 
       useEffect(() => {
       allGoals();
+      // setIsLoading(false);
+      
       }, []);
 
       return (
             //outermost div
             <div className="h-screen w-screen p-1">
                   {/* this div conatains all the elements */}
-                  <div className="w-full h-full rounded-sm border border-gray-400 flex flex-col px-4 py-2">
+                  {isLoading?<Loader message={loaderMessage}/>:<div className="w-full h-full rounded-sm border border-gray-400 flex flex-col px-4 py-2">
 
                         
                         {/* Top Navbar */}
@@ -162,7 +172,7 @@ export default function DashboardPage(){
 
 
                         </div>
-                  </div>
+                  </div>}
             </div>
             
       )

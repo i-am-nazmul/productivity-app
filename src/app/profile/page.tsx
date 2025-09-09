@@ -3,24 +3,38 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useIsLoading } from "@/store/store";
+import Loader from "@/components/Loader";
 
 
 export default function ProfilePage(){
 
       const [user,setUser] = React.useState('');
       const [email,setEmail] = React.useState('');
+      const {isLoading,setIsLoading}=useIsLoading();
       const router = useRouter();
 
 
       const getUserData = async function (){
-            const userData = await axios.get('/api/profile');
-            setUser(userData.data.username);
-            setEmail(userData.data.email);
+            setIsLoading(true);
+            try {
+                  const userData = await axios.get('/api/profile');
+                  setUser(userData.data.username);
+                  setEmail(userData.data.email);
+            } catch (error) {
+                  console.log(error);
+            }
+            setIsLoading(false);
 
       }
 
       const moveToDashboard = function (){
             router.push('/dashboard');
+      }
+
+      const logout = async function () {
+            await axios.post('/api/logout');
+            router.push('/login');
       }
 
       useEffect(()=>{
@@ -33,7 +47,7 @@ export default function ProfilePage(){
             //outermost div
             <div className="h-screen w-screen p-1">
                   {/* this div conatains all the elements */}
-                  <div className="w-full h-full rounded-sm border border-gray-400 flex flex-col px-4 py-2">
+                  {isLoading ? <Loader message={"Fetching your details"}/>:<div className="w-full h-full rounded-sm border border-gray-400 flex flex-col px-4 py-2">
 
                         
                         
@@ -57,6 +71,8 @@ export default function ProfilePage(){
                                           <li className="cursor-pointer w-full text-start px-6 py-2 rounded-xs font-semibold text-gray-700 text-2xl tracking-tighter">{user}</li>
                                           <li className="cursor-pointer w-full text-start px-6 py-2 rounded-xs font-semibold text-gray-700 text-2xl tracking-tighter">{email}</li>
                                     </ul>
+                                    <button className="bg-emerald-800 px-4 py-1 text-white font-mono tracking-tighter text-4xl cursor-pointer hover:bg-emerald-900 rounded-sm"
+                              onClick={logout}>Logout</button>
                               </div>
 
 
@@ -75,7 +91,7 @@ export default function ProfilePage(){
 
 
                         </div>
-                  </div>
+                  </div>}
             </div>
             
       )

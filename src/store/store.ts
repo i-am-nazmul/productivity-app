@@ -1,3 +1,4 @@
+import { set } from 'mongoose';
 import { create } from 'zustand';
 
 
@@ -129,7 +130,26 @@ const useDatesWithDuration = create<DatesStore>((set) => ({
 
 
 
+//for loader animation boolean 
+type Loader = {
+  isLoading : boolean;
+  setIsLoading : (value : boolean)=> void
+}
+const useIsLoading = create <Loader>((set)=>({
+  isLoading : false,
+  setIsLoading : (value)=>set({isLoading:value})
+}))
 
 
 
-export {useGoalList,useAddGoalInput,useDuartionInput,useDuartion,useCurrentGoal,useCurrentDate,useDatesWithDuration}
+
+export {useGoalList,
+  useAddGoalInput,
+  useDuartionInput,
+  useDuartion,
+  useCurrentGoal,
+  useCurrentDate,
+  useDatesWithDuration,
+  useIsLoading
+}
+

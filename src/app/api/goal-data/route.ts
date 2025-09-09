@@ -17,7 +17,7 @@ export async function POST(request:NextRequest) {
 
     const requestBody = await request.json();
     const {goalName,duration,date} = requestBody;
-    if(!goalName || duration <= 0 || typeof goalName!=='string'  || !date){
+    if(!goalName || duration <= 0 || typeof goalName!=='string'    || !date){
       console.error("Either invalid duration or goalname or date.");
       return NextResponse.json({message : "Failed to add goal data."},{
         status : 400

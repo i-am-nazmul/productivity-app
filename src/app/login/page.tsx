@@ -2,6 +2,8 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useIsLoading } from "@/store/store";
+import Loader from "@/components/Loader";
 
 
 
@@ -9,15 +11,19 @@ export default function LoginPage(){
       const router = useRouter();
       const [email,setEmail]=React.useState('');
       const [password,setPassword]=React.useState('');
+      const {isLoading,setIsLoading}=useIsLoading();
 
       const Login = async () => {
             try {
+                  setIsLoading(true);
             const request = await axios.post('/api/login', {
                   email,
                   password
             });
             if (request.status === 200) {
                   router.push("/dashboard");
+                  return;
+                  
             }
       
             } catch (error: any) {
@@ -38,7 +44,7 @@ export default function LoginPage(){
                                     Login
                               </h1>
                         </div>
-                        <div className="flex flex-col gap-2 font-mono justify-center items-center w-full h-full ">
+                        {isLoading ?<Loader message={"Wait"}/>:<div className="flex flex-col gap-2 font-mono justify-center items-center w-full h-full ">
 
                               
 
@@ -54,7 +60,7 @@ export default function LoginPage(){
                               onClick={Login}>Login</button>
 
                               <button className="bg-emerald-800 text-white px-3 py-1 mt-4 cursor-pointer hover:bg-emerald-900 rounded-xs font-sans " onClick={SignUp}>Signup Instead</button>
-                        </div>
+                        </div>}
                   </div>
             </div>
       )
