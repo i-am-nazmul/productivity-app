@@ -97,15 +97,15 @@ const useCurrentGoal = create<CurrentGoal>((set)=>({
 
 //current date selected 
 type CurrentDate = {
-  currentDate : Date,
-  setCurrentDate : (value : Date) => void ;
-}
+  currentDate: Date | null;
+  setCurrentDate: (value: Date | null) => void;
+};
 
-const useCurrentDate = create<CurrentDate>((set)=>({
-  currentDate : new Date(),
-  setCurrentDate : (value) =>set((state)=>({currentDate:value}))
+const useCurrentDate = create<CurrentDate>((set) => ({
+  currentDate: new Date(),
+  setCurrentDate: (value) => set(() => ({ currentDate: value })),
+}));
 
-}))
 
 
 

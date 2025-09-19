@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useDuartionInput,useAddGoalInput , useGoalList,useCurrentGoal,useCurrentDate,useDatesWithDuration} from "@/store/store";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 
 
@@ -62,12 +63,26 @@ export default function WorkCalendar() {
 
 
   // Handle date click
-  function handleDateClick(day: number) {
-    showDurationInput();
-    hideGoalInput();
-    const clickedDate = new Date(currentYear, currentMonth, day);
-    setCurrentDate(clickedDate);
+function handleDateClick(day: number) {
+  showDurationInput();
+  hideGoalInput();
+
+  const clickedDate = new Date(currentYear, currentMonth, day);
+
+  // normalize times (remove hours, minutes, seconds)
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  clickedDate.setHours(0, 0, 0, 0);
+
+  if (clickedDate > today) {
+    toast.error("You cannot add something in the future!");
+    setCurrentDate(null); // clear
+    return;
   }
+
+  setCurrentDate(clickedDate); // safe to set
+}
+
 
 
     function isDateHighlighted(day: number) {

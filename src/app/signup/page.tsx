@@ -19,7 +19,7 @@ export default function SignupPage(){
             if(!username || !email || !password){
                   toast.error("Please enter all the fields!");
                   return ;
-                  
+
             }
             setIsLoading(true);
             try {
@@ -35,7 +35,7 @@ export default function SignupPage(){
             } catch (error: any) {
                   console.error("Signup error");
             }
-            
+                  
       };
       const Login = () =>{
             router.push('/login');

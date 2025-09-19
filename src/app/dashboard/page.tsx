@@ -86,12 +86,13 @@ export default function DashboardPage(){
                   return ;
 
             }
-            if(!currentDate){
+            if(!currentDate ){
                   toast.error("Please select a valid date!");
                   return;
-                  
+
                   
             }
+            
 
             
             setLoaderMessage('Adding your progress');
