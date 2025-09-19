@@ -10,6 +10,7 @@ import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Loader from "@/components/Loader";
+import toast from "react-hot-toast";
 
 
 
@@ -30,6 +31,11 @@ export default function DashboardPage(){
 
 //add a new goal 
       const addNewGoal = async function(){
+            if(!newGoal){
+                  toast.error("Please add a valid goal!");
+                  return;
+
+            }
             setLoaderMessage('Adding your goal');
             setIsLoading(true);
             setNewGoal("");
@@ -75,6 +81,17 @@ export default function DashboardPage(){
       
       //function for saving the details of a goal 
       const saveGoalDetails = async function (){
+            if(!duration){
+                  toast.error("Please enter valid duration!");
+                  return ;
+
+            }
+            if(!currentDate){
+                  toast.error("Please select a valid date!");
+                  return;
+                  
+                  
+            }
 
             
             setLoaderMessage('Adding your progress');
@@ -87,7 +104,8 @@ export default function DashboardPage(){
                   });
 
                   if(request.status === 201){
-                        console.log("Data for the task is updated")
+                        console.log("Data for the task is updated");
+                        setDuration(0);
                         hideDurationInput();
                         showGoalInput();
 

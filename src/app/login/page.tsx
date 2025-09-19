@@ -38,7 +38,7 @@ export default function LoginPage(){
                   if(axios.isAxiosError(error) && error.response?.status===401){
                         toast.error("Invalid credentials!");
                         setIsLoading(false);
-                        
+
                   }
                   console.error("Login error");
             }
@@ -65,7 +65,7 @@ export default function LoginPage(){
                               onChange={(e)=>{setEmail(e.target.value)}}/>
 
 
-                              <input type="text" 
+                              <input type="password" 
                               placeholder="Enter the password" className="outline-none tracking-tighter text-2xl px-4 py-2 bg-amber-200 rounded-sm text-black border border-gray-400"
                               onChange={(e)=>{setPassword(e.target.value)}}/>
 

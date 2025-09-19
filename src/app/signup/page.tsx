@@ -4,6 +4,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useIsLoading } from "@/store/store";
 import Loader from "@/components/Loader";
+import toast from "react-hot-toast";
 
 
 
@@ -15,6 +16,11 @@ export default function SignupPage(){
       const router = useRouter();
 
       const Signup = async () => {
+            if(!username || !email || !password){
+                  toast.error("Please enter all the fields!");
+                  return ;
+                  
+            }
             setIsLoading(true);
             try {
             const request = await axios.post('/api/signup', {
