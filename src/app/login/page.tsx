@@ -1,9 +1,11 @@
 "use client"
 import React, { useEffect } from "react";
-import axios from "axios";
+import axios, { isAxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { useIsLoading } from "@/store/store";
 import Loader from "@/components/Loader";
+import toast from "react-hot-toast";
+import { totalmem } from "os";
 
 
 
@@ -14,6 +16,12 @@ export default function LoginPage(){
       const {isLoading,setIsLoading}=useIsLoading();
 
       const Login = async () => {
+            if(!email || !password){
+                  toast.error("Please enter valid credentials!");
+
+                  return;
+
+            }
             try {
                   setIsLoading(true);
             const request = await axios.post('/api/login', {
@@ -27,6 +35,11 @@ export default function LoginPage(){
             }
       
             } catch (error: any) {
+                  if(axios.isAxiosError(error) && error.response?.status===401){
+                        toast.error("Invalid credentials!");
+                        setIsLoading(false);
+                        
+                  }
                   console.error("Login error");
             }
       };
