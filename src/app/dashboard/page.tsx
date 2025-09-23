@@ -137,7 +137,7 @@ export default function DashboardPage(){
             //outermost div
             <div className="h-screen w-screen p-1">
                   {/* this div conatains all the elements */}
-                  {isLoading?<Loader message={loaderMessage}/>:<div className="w-full h-full rounded-sm border border-gray-400 flex flex-col px-4 py-2">
+                  <div className="w-full h-full rounded-sm border border-gray-400 flex flex-col px-4 py-2">
 
                         
                         {/* Top Navbar */}
@@ -192,7 +192,8 @@ export default function DashboardPage(){
 
 
                         </div>
-                  </div>}
+                  </div>
+                  {isLoading && (<Loader message="Please wait while we fetch your data"/>)}
             </div>
             
       )

@@ -7,8 +7,15 @@ type Message ={
 
 const Loader = ({message}:Message) => {
   return (
-    <div className='h-full flex justify-center items-center flex-col'><h1 className='text-4xl font-bold tracking-tighter text-gray-600 text-center m-4'>{message}</h1>
-        <BarLoader/>
+    <div className='fixed inset-0 flex items-center justify-center bg-black/50 z-50'>
+
+      <div className="bg-white rounded-lg shadow-lg p-6 max-w-sm text-center">
+
+        <h1 className='text-4xl font-bold tracking-tighter text-gray-600 text-center m-4'>{message}</h1>
+          <BarLoader/>
+      </div>
+
+
     </div>
   )
 }
