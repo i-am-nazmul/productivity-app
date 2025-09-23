@@ -44,6 +44,7 @@ export default function DashboardPage(){
                         "newGoal" : newGoal
                   });
                   allGoals();
+                  toast.success("Successfully added a new goal!");
                   console.log("New task has been added succesfully !!")
 
             } catch (error:any) {
@@ -111,7 +112,7 @@ export default function DashboardPage(){
                         showGoalInput();
 
                   }
-                  
+                  toast.success("Successfully added your data!");
                   console.log("Data for the task is updated")
 
             } catch (error:any) {
