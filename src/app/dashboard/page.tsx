@@ -193,7 +193,7 @@ export default function DashboardPage(){
 
                         </div>
                   </div>
-                  {isLoading && (<Loader message="Please wait while we fetch your data"/>)}
+                  {isLoading && (<Loader message={loaderMessage}/>)}
             </div>
             
       )
