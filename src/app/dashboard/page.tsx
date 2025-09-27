@@ -159,7 +159,7 @@ export default function DashboardPage(){
                                     width={70}
                                     height={200}
                                     alt="work"
-                                    className="bg-amber-400 rounded-full cursor-pointer"
+                                    className="bg-amber-400 rounded-full cursor-pointer shadow-md hover:shadow-lg "
                                     onClick={moveToProfilePage}
                                     />
 
@@ -171,7 +171,7 @@ export default function DashboardPage(){
                         <div className="w-full h-full flex flex-row items-center gap-4 mt-4">
 
 
-                              <div className="bg-white w-2/5 h-full border border-gray-200 rounded-sm ">
+                              <div className="bg-white w-2/5 h-full border border-gray-200 rounded-sm shadow-md">
                                     <Goals goals = {goals}/>
                               </div>
 
@@ -185,7 +185,7 @@ export default function DashboardPage(){
                                     />
                               </div>
 
-                              <div className="w-2/5 h-full border border-gray-200 rounded-sm">
+                              <div className="w-2/5 h-full border border-gray-200 rounded-sm shadow-md flex flex-col gap-4 p-2">
                                     <WorkCalendar/>
                                     <Chart/>
                               </div>
