@@ -22,11 +22,15 @@ export default function Goals({ goals }: { goals: {
                         {goals && goals.length ? <ul className="font-mono tracking-tight px-4 py-2 bg-amber-200 w-max rounded-sm">
                               {goals.map((goalObj) => (
                               <li key={goalObj._id}
-                              className="flex ">
-                                    <button className="cursor-pointer w-full text-start px-6 py-2 rounded-sm font-semibold text-gray-700 text-2xl tracking-tighter hover:bg-amber-300 hover:text-black"
-                                    onClick={() => setCurrentGoal(goalObj.goal)}>
-                                    {goalObj.goal}
+                              className="flex justify-between items-center my-2">
+                                    <button className={`cursor-pointer w-full text-start px-6 py-2 rounded-sm font-semibold text-gray-700 text-2xl tracking-tighter ${currentGoal === goalObj.goal? "bg-gray-900 text-white shadow-md": "hover:bg-amber-300"}`} onClick={() => setCurrentGoal(goalObj.goal)}>
+                                          {goalObj.goal}
+
+
                                     </button>
+                                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-10">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                          </svg>
                                     
                               </li>
                               ))}
