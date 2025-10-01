@@ -140,25 +140,25 @@ function handleDateClick(day: number) {
         <div className="flex justify-center items-center space-x-6 mb-4">
         <button
           onClick={handlePrevMonth}
-          className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+          className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 cursor-pointer"
         >
           ←
         </button>
 
-        <h1 className="text-4xl font-bold tracking-tighter text-gray-600 text-center m-4">
+        <h1 className="text-4xl font-bold tracking-tighter text-gray-700 text-center m-4">
           {getMonthName(currentMonth)} {currentYear}
         </h1>
 
         <button
           onClick={handleNextMonth}
-          className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+          className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 cursor-pointer"
         >
           →
         </button>
         
       </div>
 
-        {!currentGoal ?<h1 className="text-4xl font-bold tracking-tighter text-gray-600 text-center m-4">Please add goals</h1> : <h1 className="text-4xl font-bold tracking-tighter text-gray-600 text-center m-4">Goal : {currentGoal}</h1>}
+        {!currentGoal ?<h1 className="text-4xl font-bold tracking-tighter text-gray-700 text-center m-4">Please add goals</h1> : <h1 className="text-4xl font-bold tracking-tighter text-gray-700 text-center m-4">Goal : {currentGoal}</h1>}
 
       </div>
       
