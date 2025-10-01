@@ -140,6 +140,16 @@ const useIsLoading = create <Loader>((set)=>({
   setIsLoading : (value)=>set({isLoading:value})
 }))
 
+//for confirmation
+type Confirming = {
+  isConfirming : boolean;
+  setIsConfirming : (value : boolean)=> void
+}
+const useIsConfirming = create <Confirming>((set)=>({
+  isConfirming : false,
+  setIsConfirming : (value)=>set({isConfirming:value})
+}))
+
 
 
 
@@ -150,6 +160,7 @@ export {useGoalList,
   useCurrentGoal,
   useCurrentDate,
   useDatesWithDuration,
-  useIsLoading
+  useIsLoading,
+  useIsConfirming
 }
 
