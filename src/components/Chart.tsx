@@ -18,7 +18,7 @@ const Chart = () => {
     (a, b) => a.date.getTime() - b.date.getTime()
   );
 
-  let data: any = [];
+  const data: any = [];
 
   // Get Nth date from today (negative means past)
   function getNthDateFromToday(n: number): Date {
@@ -27,16 +27,16 @@ const Chart = () => {
     return today;
   }
 
-  // Build data for the last 7 days
+
   for (let i = 0; i < 7; i++) {
     const targetDate = getNthDateFromToday(-i);
 
-    // Try to find entry for this date
+
     const entry = sortedDates.find(
       (obj) => obj.date.toDateString() === targetDate.toDateString()
     );
 
-    // If found, push it; otherwise, push duration = 0
+
     data.push({
       date: targetDate.toLocaleDateString(),
       duration: entry ? entry.duration : 0,

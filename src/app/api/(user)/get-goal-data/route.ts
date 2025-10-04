@@ -2,7 +2,6 @@ import Goals from "@/models/goals.models";
 import { NextRequest,NextResponse } from "next/server";
 import { connect } from "@/dbconfig/dbconfig";
 import jwt from "jsonwebtoken";
-import Users from "@/models/users.models";
 import GoalData from "@/models/goaldata.models";
 
 
@@ -43,12 +42,28 @@ export async function GET(request : NextRequest){
 
       return NextResponse.json({ goalData: dataForEachGoal }, { status: 200 });
 
-      } catch (error:any) {
-            console.error("Error while fetching the goal data");
+      } catch (error: unknown) {
+    console.error("Error while fetching goal data:", error);
 
-            return NextResponse.json({
-                  
-                  message:"Failed to fetch the goal data."
-            },{status : 500})
-      }
+    
+    if (error instanceof jwt.JsonWebTokenError) {
+      return NextResponse.json(
+        { message: "Invalid or expired token." },
+        { status: 401 }
+      );
+    }
+
+    
+    if (error instanceof Error) {
+      return NextResponse.json(
+        { message: error.message || "Failed to fetch the goal data." },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json(
+      { message: "Unexpected error occurred while fetching goal data." },
+      { status: 500 }
+    );
+  }
 }

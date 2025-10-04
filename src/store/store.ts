@@ -1,4 +1,3 @@
-
 import { create } from 'zustand';
 
 
@@ -68,16 +67,15 @@ const useDuartionInput = create<DurationInput>((set)=>({
 
 // for logging the duration
 type Duration = {
-  duration: number;
-  setDuration: (value : number) => void;
+  duration: number;
+  setDuration: (value : number) => void;
 
 };
 
 const useDuartion = create<Duration>((set) => ({
-  duration:0,
-  setDuration: (value) => set((state) => ({ duration: value })),
+  duration: 0,
+  setDuration: (value) => set({ duration: value })
 }));
-
 
 
 
@@ -89,7 +87,7 @@ type CurrentGoal = {
 
 const useCurrentGoal = create<CurrentGoal>((set)=>({
   currentGoal : '',
-  setCurrentGoal : (value) =>set((state)=>({currentGoal:value}))
+  setCurrentGoal : (value) =>set({currentGoal:value})
 
 }))
 
@@ -151,6 +149,14 @@ const useIsConfirming = create <Confirming>((set)=>({
 }))
 
 
+type LoaderMessage = {
+  loaderMessage : string;
+  setLoaderMessage : (value : string)=> void  
+}
+const useLoaderMessage = create<LoaderMessage>((set)=>({
+  loaderMessage : 'Please wait while we fetch your data',
+  setLoaderMessage : (value)=>set({loaderMessage:value})
+}))
 
 
 export {useGoalList,
@@ -161,6 +167,7 @@ export {useGoalList,
   useCurrentDate,
   useDatesWithDuration,
   useIsLoading,
-  useIsConfirming
+  useIsConfirming,
+  useLoaderMessage
 }
 

@@ -12,8 +12,7 @@ export default function Goals({ goals }: { goals: {
 
  }[] })
 {
-      const { displayGoalInput, showGoalInput, hideGoalInput } = useAddGoalInput();
-      const { displayDurationInput, hideDurationInput, showDurationInput } = useDuartionInput();
+      
       const {currentGoal,setCurrentGoal}=useCurrentGoal();
 
       const {isConfirming,setIsConfirming}=useIsConfirming();

@@ -32,8 +32,29 @@ export async function POST(request:NextRequest) {
       data : newGoalObject
     },{status:201});
 
-  } catch (error:any) {
-    console.error(error);
-    return NextResponse.json({ message : "Failed to add." }, { status: 500 });
+  } catch (error: unknown) {
+    console.error("Error while adding goal:", error);
+
+
+    if (error instanceof jwt.JsonWebTokenError) {
+      return NextResponse.json(
+        { message: "Invalid or expired token." },
+        { status: 401 }
+      );
+    }
+
+    
+    if (error instanceof Error) {
+      return NextResponse.json(
+        { message: error.message || "Failed to add goal." },
+        { status: 500 }
+      );
+    }
+
+    
+    return NextResponse.json(
+      { message: "An unexpected error occurred while adding goal." },
+      { status: 500 }
+    );
   }
 }

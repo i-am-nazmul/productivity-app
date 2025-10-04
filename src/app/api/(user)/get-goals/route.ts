@@ -18,10 +18,28 @@ export async function GET(request : NextRequest){
       const userGoals = await Goals.find({owner : decodedToken.id});
       return NextResponse.json({ goals: userGoals }, { status: 200 });
 
-      } catch (error:any) {
-            console.log("Error while fetching goals : ",error);
-            return NextResponse.json({
-                  message : "Failed to get the goals."
-            },{status : 500})
-      }
+      } catch (error: unknown) {
+    console.error("Error while fetching goals:", error);
+
+    
+    if (error instanceof jwt.JsonWebTokenError) {
+      return NextResponse.json(
+        { message: "Invalid or expired token." },
+        { status: 401 }
+      );
+    }
+
+    if (error instanceof Error) {
+      return NextResponse.json(
+        { message: error.message || "Failed to get the goals." },
+        { status: 500 }
+      );
+    }
+
+    
+    return NextResponse.json(
+      { message: "An unknown error occurred while fetching goals." },
+      { status: 500 }
+    );
+  }
 }

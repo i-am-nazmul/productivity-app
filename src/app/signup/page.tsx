@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect } from "react";
+import React from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useIsLoading } from "@/store/store";
@@ -32,7 +32,7 @@ export default function SignupPage(){
                   router.push("/dashboard");
             }
       
-            } catch (error: any) {
+            } catch (error) {
                   console.error("Signup error");
             }
                   

@@ -5,7 +5,7 @@ import Chart from "@/components/Chart";
 import Goals from "@/components/Goals";
 import AddNewGoal from "@/components/AddNewGoal";
 import AddGoalData from "@/components/AddGoalData";
-import {useGoalList,useAddGoalInput,useDuartionInput,useCurrentGoal,useCurrentDate,useIsLoading} from "@/store/store";
+import {useGoalList,useAddGoalInput,useDuartionInput,useCurrentGoal,useCurrentDate,useIsLoading,useLoaderMessage} from "@/store/store";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -18,13 +18,13 @@ export default function DashboardPage(){
       const [newGoal,setNewGoal]=React.useState('');
       const [duration,setDuration] = React.useState(0);
       const { goals, setGoals } = useGoalList();
-      const { displayGoalInput, showGoalInput, hideGoalInput } = useAddGoalInput();
-      const { displayDurationInput, hideDurationInput, showDurationInput } = useDuartionInput();
+      const { displayGoalInput, showGoalInput } = useAddGoalInput();
+      const { displayDurationInput, hideDurationInput } = useDuartionInput();
       const {currentGoal,setCurrentGoal}= useCurrentGoal();
       const {currentDate} = useCurrentDate();
       const {isLoading,setIsLoading}=useIsLoading();
       const defaultMessage = 'Please wait while we fetch your data';
-      const [loaderMessage,setLoaderMessage]=React.useState(defaultMessage);
+      const {loaderMessage,setLoaderMessage}=useLoaderMessage();
       const router = useRouter();
 
 
@@ -47,7 +47,7 @@ export default function DashboardPage(){
                   toast.success("Successfully added a new goal!");
                   console.log("New task has been added succesfully !!")
 
-            } catch (error:any) {
+            } catch (error) {
                   console.log("Failed to add new error : ", error);
             }
 
@@ -115,7 +115,7 @@ export default function DashboardPage(){
                   toast.success("Successfully added your data!");
                   console.log("Data for the task is updated")
 
-            } catch (error:any) {
+            } catch (error) {
                   console.log("Failed to add new error : ", error);
             }
             setIsLoading(false);
@@ -131,7 +131,7 @@ export default function DashboardPage(){
       allGoals();
       // setIsLoading(false);
       
-      }, []);
+      });
 
       return (
             //outermost div

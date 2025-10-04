@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useDuartionInput,useAddGoalInput , useGoalList,useCurrentGoal,useCurrentDate,useDatesWithDuration} from "@/store/store";
+import { useDuartionInput,useAddGoalInput ,useCurrentGoal,useCurrentDate,useDatesWithDuration} from "@/store/store";
 import axios from "axios";
 import toast from "react-hot-toast";
 
@@ -17,12 +17,12 @@ export default function WorkCalendar() {
 
 
 
-  const { displayDurationInput, hideDurationInput, showDurationInput } = useDuartionInput();
-  const { displayGoalInput, showGoalInput, hideGoalInput } = useAddGoalInput();
-  const { goals} = useGoalList();
+  const {  displayDurationInput,showDurationInput } = useDuartionInput();
+  const { hideGoalInput } = useAddGoalInput();
+  
   const {currentGoal}=useCurrentGoal();
-  const {currentDate,setCurrentDate} = useCurrentDate();
-  const {datesWithDuration,setDatesWithDuration} = useDatesWithDuration();
+  const {setCurrentDate} = useCurrentDate();
+  const {setDatesWithDuration} = useDatesWithDuration();
   
 
 

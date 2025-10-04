@@ -45,8 +45,19 @@ export async function POST(request:NextRequest) {
     return response;
 
 
-  } catch (error:any) {
-    console.error(error)
-    return NextResponse.json({message : "Internal error occured"} ,{ status: 500 });
+  } catch (error: unknown) {
+    console.error("Signup error:", error);
+
+    if (error instanceof Error) {
+      return NextResponse.json(
+        { message: error.message || "Internal error occurred" },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json(
+      { message: "Unexpected error occurred" },
+      { status: 500 }
+    );
   }
 }

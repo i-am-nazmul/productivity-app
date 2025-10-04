@@ -49,8 +49,24 @@ export async function POST(request:NextRequest) {
     return response;
 
 
-  } catch (error:any) {
-    console.error(error);
-    return NextResponse.json({ message : "Failed to login." }, { status: 500 });
+  } catch (error: unknown) {
+    console.error("Error while fetching the goal data", error);
+
+    
+    if (error instanceof jwt.JsonWebTokenError) {
+      return NextResponse.json({ message: "Invalid token" }, { status: 401 });
+    }
+
+    if (error instanceof Error) {
+      return NextResponse.json(
+        { message: error.message || "Failed to fetch the goal data." },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json(
+      { message: "An unexpected error occurred." },
+      { status: 500 }
+    );
   }
 }

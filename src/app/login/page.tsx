@@ -34,7 +34,7 @@ export default function LoginPage(){
                   
             }
       
-            } catch (error: any) {
+            } catch (error) {
                   if(axios.isAxiosError(error) && error.response?.status===401){
                         toast.error("Invalid credentials!");
                         setIsLoading(false);
