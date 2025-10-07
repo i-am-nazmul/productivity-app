@@ -131,7 +131,7 @@ export default function DashboardPage(){
       allGoals();
       // setIsLoading(false);
       
-      });
+      },[]);
 
       return (
             //outermost div

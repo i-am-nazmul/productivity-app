@@ -1,6 +1,7 @@
 import { useAddGoalInput,useDuartionInput, useCurrentGoal,useIsConfirming} from "@/store/store"
 import React from "react";
 import Confirmation from "./Confirmation";
+import axios from "axios";
 
 
 
@@ -22,6 +23,9 @@ export default function Goals({ goals }: { goals: {
       const handleCrossClick=(goal:string)=>{
             setIsConfirming(true);
             setGoalToDelete(goal);
+            axios.delete('/api/delete-goal', { data: { goal: goalToDelete } });
+
+            
       }
 
       
