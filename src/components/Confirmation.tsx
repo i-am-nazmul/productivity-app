@@ -2,6 +2,7 @@ import React from 'react'
 import { useIsConfirming, useGoalList, useIsLoading, useLoaderMessage } from '@/store/store'
 import axios from 'axios'
 import toast from 'react-hot-toast'
+import { useGetAllGoals } from '@/store/global_functions'
 
 type GoalProps = {
   goal: string
@@ -12,6 +13,7 @@ const Confirmation = ({ goal }: GoalProps) => {
   const { goals, setGoals } = useGoalList();
   const { setIsLoading } = useIsLoading();
   const { setLoaderMessage } = useLoaderMessage();
+  const getAllGoals=useGetAllGoals();
 
   const handleClose = () => {
     setIsConfirming(false);
@@ -31,6 +33,7 @@ const Confirmation = ({ goal }: GoalProps) => {
 
       // ✅ Remove from array directly
       setGoals(goals.filter((g) => g.goal !== goal));
+      await getAllGoals();
 
       toast.success("Goal deleted successfully!");
     } catch (error) {

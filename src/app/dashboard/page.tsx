@@ -11,6 +11,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Loader from "@/components/Loader";
 import toast from "react-hot-toast";
+import { useGetAllGoals } from "@/store/global_functions";
 
 
 
@@ -25,6 +26,7 @@ export default function DashboardPage(){
       const {isLoading,setIsLoading}=useIsLoading();
       const defaultMessage = 'Please wait while we fetch your data';
       const {loaderMessage,setLoaderMessage}=useLoaderMessage();
+      const getAllGoals = useGetAllGoals();
       const router = useRouter();
 
 
@@ -43,7 +45,7 @@ export default function DashboardPage(){
                   await axios.post('/api/new-goal',{
                         "newGoal" : newGoal
                   });
-                  allGoals();
+                  getAllGoals();
                   toast.success("Successfully added a new goal!");
                   console.log("New task has been added succesfully !!")
 
@@ -55,29 +57,7 @@ export default function DashboardPage(){
       }
 
 
-// function for rendering all goals 
-      const allGoals = async function () {
-            setIsLoading(true);
-      try {
-      const response = await axios.get("/api/get-goals");
 
-      if (response.data && response.data.goals) {
-            const goalArray = response.data.goals;
-
-
-            setGoals(goalArray);
-
-            if (goalArray.length > 0) {
-            setCurrentGoal(goalArray[0].goal);
-            } else {
-            setCurrentGoal("");
-            }
-      }
-      } catch (error) {
-      console.error("Failed to fetch goals:", error);
-      }
-      setIsLoading(false);
-      };
 
       
       //function for saving the details of a goal 
@@ -128,7 +108,7 @@ export default function DashboardPage(){
 
 
       useEffect(() => {
-      allGoals();
+      getAllGoals();
       // setIsLoading(false);
       
       },[]);
