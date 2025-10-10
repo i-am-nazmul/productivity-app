@@ -1,6 +1,6 @@
 "use client"
 import React from "react";
-import axiosfrom "axios";
+import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useIsLoading } from "@/store/store";
 import Loader from "@/components/Loader";
