@@ -5,6 +5,12 @@ import GoalData from "@/models/goaldata.models";
 import { NextRequest } from "next/server";
 import jwt from "jsonwebtoken";
 
+interface DecodedToken {
+    id: string; 
+    iat: number; 
+    exp: number; 
+}
+
 export async function DELETE(request:NextRequest) {
       await connect();
 
@@ -13,7 +19,7 @@ export async function DELETE(request:NextRequest) {
           if (!token) {
             return NextResponse.json({ message: "Unauthorized. No token provided." }, { status: 401 });
           }
-          const decodedToken: any = jwt.verify(token, process.env.TOKEN_SECRET!);
+          const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET!) as DecodedToken;
 
 
       

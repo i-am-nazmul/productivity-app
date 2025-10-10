@@ -3,6 +3,12 @@ import { NextRequest,NextResponse } from "next/server";
 import { connect } from "@/dbconfig/dbconfig";
 import jwt from "jsonwebtoken";
 
+interface DecodedToken {
+    id: string; 
+    iat: number; 
+    exp: number; 
+}
+
 
 
 
@@ -14,7 +20,7 @@ export async function GET(request : NextRequest){
       if (!token) {
             return NextResponse.json({ message: "Unauthorised." }, { status: 401 });
       }
-      const decodedToken: any = jwt.verify(token, process.env.TOKEN_SECRET!);
+      const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET!) as DecodedToken;
       const userGoals = await Goals.find({owner : decodedToken.id});
       return NextResponse.json({ goals: userGoals }, { status: 200 });
 

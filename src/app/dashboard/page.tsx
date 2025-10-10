@@ -21,7 +21,7 @@ export default function DashboardPage(){
       const { goals } = useGoalList();
       const { displayGoalInput, showGoalInput } = useAddGoalInput();
       const { displayDurationInput, hideDurationInput } = useDuartionInput();
-      const {currentGoal,setCurrentGoal}= useCurrentGoal();
+      const {currentGoal}= useCurrentGoal();
       const {currentDate} = useCurrentDate();
       const {isLoading,setIsLoading}=useIsLoading();
       

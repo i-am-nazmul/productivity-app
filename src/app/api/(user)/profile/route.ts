@@ -3,11 +3,17 @@ import Users from '@/models/users.models';
 import { NextRequest, NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 
+interface DecodedToken {
+    id: string; 
+    iat: number; 
+    exp: number; 
+}
+
 export async function GET(request: NextRequest) {
   await connect();
 
   try {
-    // Get the token from cookies
+    
     const token = request.cookies.get("token")?.value;
 
     if (!token) {
@@ -15,10 +21,10 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ message: "Failed" }, { status: 401 });
     }
 
-    // verify the token
-    const decodedToken: any = jwt.verify(token, process.env.TOKEN_SECRET!);
+    
+    const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET!) as DecodedToken;
 
-    // find the user by ID
+    
     const user = await Users.findById(decodedToken.id).select("username email");
 
     if (!user) {
@@ -26,7 +32,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ message: "Failed" }, { status: 404 });
     }
 
-    // 4. Return username and email
+    
     return NextResponse.json({
       username: user.username,
       email: user.email,

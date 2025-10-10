@@ -32,8 +32,8 @@ export default function SignupPage(){
                   router.push("/dashboard");
             }
       
-            } catch (error) {
-                  console.error("Signup error");
+            } catch (error:unknown) {
+                  console.error("Signup error",error);
             }
                   
       };

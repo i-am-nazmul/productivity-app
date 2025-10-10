@@ -3,6 +3,12 @@ import Goals from '@/models/goals.models';
 import { NextResponse,NextRequest } from 'next/server';
 import jwt from 'jsonwebtoken';
 
+interface DecodedToken {
+    id: string; 
+    iat: number; 
+    exp: number; 
+}
+
 export async function POST(request:NextRequest) {
   await connect();
 
@@ -11,7 +17,7 @@ export async function POST(request:NextRequest) {
     if (!token) {
       return NextResponse.json({ message: "Unauthorized. No token provided." }, { status: 401 });
     }
-    const decodedToken: any = jwt.verify(token, process.env.TOKEN_SECRET!);
+    const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET!) as DecodedToken;
 
 
     const requestBody = await request.json();

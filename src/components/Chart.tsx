@@ -10,6 +10,10 @@ import {
 } from 'recharts';
 import { useDatesWithDuration } from '@/store/store';
 
+
+
+
+
 const Chart = () => {
   const { datesWithDuration } = useDatesWithDuration();
 
@@ -18,7 +22,7 @@ const Chart = () => {
     (a, b) => a.date.getTime() - b.date.getTime()
   );
 
-  const data: any = [];
+  const data = [] ;
 
   // Get Nth date from today (negative means past)
   function getNthDateFromToday(n: number): Date {

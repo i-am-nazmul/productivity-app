@@ -5,6 +5,11 @@ import jwt from "jsonwebtoken";
 import GoalData from "@/models/goaldata.models";
 
 
+interface DecodedToken {
+    id: string; 
+    iat: number; 
+    exp: number; 
+}
 
 export async function GET(request : NextRequest){
       await connect();
@@ -17,7 +22,8 @@ export async function GET(request : NextRequest){
       }
 
 
-      const decodedToken: any = jwt.verify(token, process.env.TOKEN_SECRET!);
+      const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET!) as DecodedToken;
+
 
       
 
