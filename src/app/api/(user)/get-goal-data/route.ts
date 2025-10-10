@@ -19,6 +19,8 @@ export async function GET(request : NextRequest){
 
       const decodedToken: any = jwt.verify(token, process.env.TOKEN_SECRET!);
 
+      
+
       const {searchParams} = new URL(request.url);
       const goal = searchParams.get("goal");
       

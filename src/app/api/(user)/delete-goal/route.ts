@@ -28,7 +28,7 @@ export async function DELETE(request:NextRequest) {
             await Goals.deleteOne({ _id: goalId._id, owner: decodedToken.id });
             console.log("Goal and associated data deleted successfully");
             return NextResponse.json({ message: "Goal deleted successfully" }, { status: 200 });
-      } catch (error) {
+      } catch (error:unknown) {
             console.error("Error deleting goal:", error);
             return NextResponse.json({ message: "Internal server error" }, { status: 500 });
       }

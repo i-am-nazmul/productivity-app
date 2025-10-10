@@ -23,10 +23,7 @@ export default function Goals({ goals }: { goals: {
 
       const handleCrossClick= function(goal:string){
             setGoalToDelete(goal);
-            setIsConfirming(true);
-            
-
-            
+            setIsConfirming(true);  
       }
 
       

@@ -1,4 +1,4 @@
-// 📁 useGetAllGoals.ts
+
 import { useIsLoading, useGoalList, useCurrentGoal } from "./store";
 import axios from "axios";
 

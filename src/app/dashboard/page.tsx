@@ -18,13 +18,13 @@ import { useGetAllGoals } from "@/store/global_functions";
 export default function DashboardPage(){
       const [newGoal,setNewGoal]=React.useState('');
       const [duration,setDuration] = React.useState(0);
-      const { goals, setGoals } = useGoalList();
+      const { goals } = useGoalList();
       const { displayGoalInput, showGoalInput } = useAddGoalInput();
       const { displayDurationInput, hideDurationInput } = useDuartionInput();
       const {currentGoal,setCurrentGoal}= useCurrentGoal();
       const {currentDate} = useCurrentDate();
       const {isLoading,setIsLoading}=useIsLoading();
-      const defaultMessage = 'Please wait while we fetch your data';
+      
       const {loaderMessage,setLoaderMessage}=useLoaderMessage();
       const getAllGoals = useGetAllGoals();
       const router = useRouter();
