@@ -1,13 +1,14 @@
-
 import { useIsLoading, useGoalList, useCurrentGoal } from "./store";
 import axios from "axios";
+import { useCallback } from "react";
 
 export function useGetAllGoals() {
-  const { setIsLoading } = useIsLoading();
-  const { setGoals } = useGoalList();
-  const { setCurrentGoal } = useCurrentGoal();
+  const setIsLoading = useIsLoading((state) => state.setIsLoading);
+const setGoals = useGoalList((state) => state.setGoals);
+const setCurrentGoal = useCurrentGoal((state) => state.setCurrentGoal);
 
-  const getAllGoals = async () => {
+
+  const getAllGoals = useCallback(async () => {
     setIsLoading(true);
     try {
       const response = await axios.get("/api/get-goals");
@@ -19,7 +20,7 @@ export function useGetAllGoals() {
       console.error("Failed to fetch goals:", error);
     }
     setIsLoading(false);
-  };
+  }, [setIsLoading, setGoals, setCurrentGoal]);
 
   return getAllGoals;
 }

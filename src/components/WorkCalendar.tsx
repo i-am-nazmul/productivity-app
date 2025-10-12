@@ -110,7 +110,7 @@ function handleDateClick(day: number) {
   const fetchGoalData = async function (){
     const goalDataRequest =await axios.get(`/api/get-goal-data?goal=${currentGoal}`);
     const goalData = goalDataRequest.data.goalData;
-    console.log("Yaha hu bhai",goalData[0])
+    
     const datesAndDuration = goalData.map((item:GoalDataItem )=>({
       date : new Date (item.date),
       duration : item.duration 
@@ -131,10 +131,11 @@ function handleDateClick(day: number) {
   useEffect(() => { 
   if (!currentGoal) return; 
 
-
+    console.log("Yaha hu mai");
   fetchGoalData();
+
   
-}, [currentGoal,displayDurationInput,fetchGoalData]); 
+}, [currentGoal,displayDurationInput]); 
 
 
 
