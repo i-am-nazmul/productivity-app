@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect,useCallback, useState } from "react";
 import { useDuartionInput,useAddGoalInput ,useCurrentGoal,useCurrentDate,useDatesWithDuration} from "@/store/store";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -107,23 +107,20 @@ function handleDateClick(day: number) {
 
 
 
-  const fetchGoalData = async function (){
-    const goalDataRequest =await axios.get(`/api/get-goal-data?goal=${currentGoal}`);
-    const goalData = goalDataRequest.data.goalData;
-    
-    const datesAndDuration = goalData.map((item:GoalDataItem )=>({
-      date : new Date (item.date),
-      duration : item.duration 
-    }))
+  const fetchGoalData = useCallback(async () => {
+  const goalDataRequest = await axios.get(`/api/get-goal-data?goal=${currentGoal}`);
+  const goalData = goalDataRequest.data.goalData;
 
-    setDatesWithDuration(datesAndDuration);
+  const datesAndDuration = goalData.map((item: GoalDataItem) => ({
+    date: new Date(item.date),
+    duration: item.duration,
+  }));
 
+  setDatesWithDuration(datesAndDuration);
 
-
-    const dates = goalData.map((item:GoalDataItem)=>new Date(item.date));
-    setDatesToHighlight(dates);
-
-    }
+  const dates = goalData.map((item: GoalDataItem) => new Date(item.date));
+  setDatesToHighlight(dates);
+}, [currentGoal, setDatesWithDuration, setDatesToHighlight]);
 
 
 
@@ -135,7 +132,7 @@ function handleDateClick(day: number) {
   fetchGoalData();
 
   
-}, [currentGoal,displayDurationInput]); 
+}, [currentGoal,displayDurationInput,fetchGoalData]); 
 
 
 

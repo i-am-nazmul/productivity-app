@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -25,7 +25,7 @@ export default function ProfilePage(){
             router.push('/login');
       }
 
-      const getUserData = async function (){
+      const getUserData = useCallback(async function (){
             setIsLoading(true);
             try {
                   const userData = await axios.get('/api/profile');
@@ -36,7 +36,7 @@ export default function ProfilePage(){
             }
             setIsLoading(false);
 
-            }
+            },[setIsLoading])
 
       useEffect(()=>{
 
