@@ -111,7 +111,7 @@ export default function DashboardPage(){
       getAllGoals();
       // setIsLoading(false);
       
-      },[]);
+      },[getAllGoals]);
 
       return (
             //outermost div

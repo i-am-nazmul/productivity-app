@@ -15,7 +15,18 @@ export default function ProfilePage(){
       const router = useRouter();
 
 
-      const getUserData = async function (){
+      
+      const moveToDashboard = function (){
+            router.push('/dashboard');
+      }
+
+      const logout = async function () {
+            await axios.post('/api/logout');
+            router.push('/login');
+      }
+
+      useEffect(()=>{
+            const getUserData = async function (){
             setIsLoading(true);
             try {
                   const userData = await axios.get('/api/profile');
@@ -28,16 +39,6 @@ export default function ProfilePage(){
 
       }
 
-      const moveToDashboard = function (){
-            router.push('/dashboard');
-      }
-
-      const logout = async function () {
-            await axios.post('/api/logout');
-            router.push('/login');
-      }
-
-      useEffect(()=>{
             getUserData();
       },[])
 

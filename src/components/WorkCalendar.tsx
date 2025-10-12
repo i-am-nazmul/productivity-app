@@ -6,6 +6,14 @@ import toast from "react-hot-toast";
 
 
 
+interface GoalDataItem {
+  _id: string;
+  goal: string;
+  duration: number;
+  date: string; 
+  __v: number;
+}
+
 export default function WorkCalendar() {
   // State for current year & month
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
@@ -80,7 +88,7 @@ function handleDateClick(day: number) {
     return;
   }
 
-  setCurrentDate(clickedDate); // safe to set
+  setCurrentDate(clickedDate);
 }
 
 
@@ -102,7 +110,8 @@ function handleDateClick(day: number) {
   const fetchGoalData = async function (){
     const goalDataRequest =await axios.get(`/api/get-goal-data?goal=${currentGoal}`);
     const goalData = goalDataRequest.data.goalData;
-    const datesAndDuration = goalData.map((item : any )=>({
+    console.log("Yaha hu bhai",goalData[0])
+    const datesAndDuration = goalData.map((item:GoalDataItem )=>({
       date : new Date (item.date),
       duration : item.duration 
     }))
@@ -111,7 +120,7 @@ function handleDateClick(day: number) {
 
 
 
-    const dates = goalData.map((item:any)=>new Date(item.date));
+    const dates = goalData.map((item:GoalDataItem)=>new Date(item.date));
     setDatesToHighlight(dates);
 
     }
@@ -121,16 +130,18 @@ function handleDateClick(day: number) {
 
   useEffect(() => { 
   if (!currentGoal) return; 
+
+  
   fetchGoalData();
-  console.log("Hello bhai , mai goal data laya hu ");
-}, [currentGoal,displayDurationInput]); // dependency array
+  
+}, [currentGoal,displayDurationInput]); 
 
 
 
 
 
   const daysInMonth = getDaysInMonth(currentYear, currentMonth);
-  // console.log("current goal hai ",currentGoal)
+
 
   return (
     <div className="px-6">
