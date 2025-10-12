@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
       email: user.email,
     },{status:200});
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Invalid or expired token. Please login.");
     return NextResponse.json({ message: "Failed", error: error.message }, { status: 401 });
   }

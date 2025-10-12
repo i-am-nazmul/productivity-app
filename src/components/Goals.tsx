@@ -1,10 +1,6 @@
-import { useAddGoalInput,useDuartionInput, useCurrentGoal,useIsConfirming} from "@/store/store"
+import {  useCurrentGoal,useIsConfirming} from "@/store/store"
 import React from "react";
 import Confirmation from "./Confirmation";
-import axios from "axios";
-import { useGetAllGoals } from "@/store/global_functions";
-
-
 
 export default function Goals({ goals }: { goals: { 
       _id: string; 
@@ -16,7 +12,6 @@ export default function Goals({ goals }: { goals: {
 {
       
       const {currentGoal,setCurrentGoal}=useCurrentGoal();
-      const getAllGoals=useGetAllGoals();
       const {isConfirming,setIsConfirming}=useIsConfirming();
       const [goalToDelete,setGoalToDelete]=React.useState("");
 

@@ -50,7 +50,7 @@ export async function POST(request:NextRequest) {
     );
 
 
-  } catch (error:any) {
+  } catch (error:unknown) {
     console.error("Error in the goal-data API : ",error);
     return NextResponse.json({ message : "Failed to add goal data." }, { status: 500 });
   }
