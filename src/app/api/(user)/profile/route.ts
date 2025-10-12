@@ -40,6 +40,6 @@ export async function GET(request: NextRequest) {
 
   } catch (error: unknown) {
     console.error("Invalid or expired token. Please login.");
-    return NextResponse.json({ message: "Failed", error: error.message }, { status: 401 });
+    return NextResponse.json({ message: "Failed",  error }, { status: 401 });
   }
 }

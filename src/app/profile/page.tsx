@@ -25,8 +25,7 @@ export default function ProfilePage(){
             router.push('/login');
       }
 
-      useEffect(()=>{
-            const getUserData = async function (){
+      const getUserData = async function (){
             setIsLoading(true);
             try {
                   const userData = await axios.get('/api/profile');
@@ -37,10 +36,12 @@ export default function ProfilePage(){
             }
             setIsLoading(false);
 
-      }
+            }
+
+      useEffect(()=>{
 
             getUserData();
-      },[])
+      },[getUserData])
 
 
 

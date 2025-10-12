@@ -131,10 +131,10 @@ function handleDateClick(day: number) {
   useEffect(() => { 
   if (!currentGoal) return; 
 
-  
+
   fetchGoalData();
   
-}, [currentGoal,displayDurationInput]); 
+}, [currentGoal,displayDurationInput,fetchGoalData]); 
 
 
 
