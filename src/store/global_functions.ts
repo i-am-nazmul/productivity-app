@@ -3,7 +3,7 @@ import axios from "axios";
 import { useCallback } from "react";
 
 export function useGetAllGoals() {
-  const setIsLoading = useIsLoading((state) => state.setIsLoading);
+const setIsLoading = useIsLoading((state) => state.setIsLoading);
 const setGoals = useGoalList((state) => state.setGoals);
 const setCurrentGoal = useCurrentGoal((state) => state.setCurrentGoal);
 
