@@ -48,7 +48,7 @@ export default function SignupPage(){
             <div className="h-screen w-screen p-1">
                   {isLoading ? <Loader message={"Wait"}/>:<div className="w-full h-full rounded-sm border border-gray-400 flex flex-col px-4 py-2 items-center">
                         <div className="w-full">
-                              <h1 className="text-7xl font-bold text-gray-700 tracking-tighter">
+                              <h1 className="text-7xl font-bold text-gray-700 tracking-tighter ">
                                     SignUp
                               </h1>
                         </div>
@@ -67,10 +67,10 @@ export default function SignupPage(){
                               placeholder="Enter the password" className="outline-none tracking-tighter text-2xl px-4 py-2 bg-amber-200 rounded-sm text-black border border-gray-400"
                               onChange={(e)=>{setPassword(e.target.value)}}/>
 
-                              <button className="bg-emerald-800 px-4 py-1 text-white text-4xl tracking-tighter cursor-pointer hover:bg-emerald-900 rounded-sm"
+                              <button className="bg-emerald-900 px-4 py-2 text-white text-4xl tracking-tighter cursor-pointer hover:bg-emerald-950 rounded-sm"
                               onClick={Signup}>Signup</button>
 
-                              <button className="bg-emerald-800 text-white px-4 font-sans py-1 mt-4 cursor-pointer hover:bg-emerald-900 rounded-xs " onClick={Login}>Already have an account ? Login Instead</button>
+                              <button className="bg-emerald-900 text-white px-4 font-sans py-1 mt-4 cursor-pointer hover:bg-emerald-950 rounded-xs " onClick={Login}>Already have an account ? Login Instead</button>
                         </div>
                   </div>}
             </div>
