@@ -115,16 +115,16 @@ export default function DashboardPage(){
 
       return (
             //outermost div
-            <div className="h-screen w-screen p-1">
+            <div className="h-full w-full sm:h-screen sm:w-screen p-1 bg-red-300">
                   {/* this div conatains all the elements */}
                   <div className="w-full h-full rounded-sm border border-gray-400 flex flex-col px-4 py-2">
 
                         
                         {/* Top Navbar */}
-                        <div className="flex justify-between ">
+                        <div className="flex justify-between flex-col sm:flex-row">
                               <h1 className="text-7xl font-bold text-gray-700 tracking-tighter">Dashboard</h1>
 
-                              <div className=" flex gap-2 items-center">
+                              <div className=" flex gap-2 items-center ">
                                     
 
                                     {displayGoalInput && (
@@ -148,16 +148,16 @@ export default function DashboardPage(){
                         </div>
                         
                         {/* body  */}
-                        <div className="w-full h-full flex flex-row items-center gap-4 mt-4">
+                        <div className="w-full h-full flex flex-col sm:flex-row items-center gap-4 mt-4">
 
 
-                              <div className="bg-white w-2/5 h-full border border-gray-200 rounded-sm shadow-md">
+                              <div className="bg-white w-full sm:w-2/5 h-full border border-gray-200 rounded-sm shadow-md">
                                     <Goals goals = {goals}/>
                               </div>
 
 
 
-                              <div className="bg-white w-1/5 h-full flex justify-center items-center rounded-sm">
+                              <div className="bg-white w-full sm:w-1/5 h-full flex justify-center items-center rounded-sm">
                                     <Image src="/working.png"
                                     width={200}
                                     height={200}
@@ -165,7 +165,7 @@ export default function DashboardPage(){
                                     />
                               </div>
 
-                              <div className="w-2/5 h-full border border-gray-200 rounded-sm shadow-md flex flex-col gap-4 p-2">
+                              <div className="w-full sm:w-2/5 h-full border border-gray-200 rounded-sm shadow-md flex flex-col gap-4 p-2">
                                     <WorkCalendar/>
                                     <Chart/>
                               </div>
