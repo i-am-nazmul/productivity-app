@@ -53,8 +53,10 @@ const Chart = () => {
   
 
   return (
-    <div style={{ width: '100%' }} className='mt-8'>
-      <h4 className="text-3xl font-semibold tracking-tighter text-gray-600 text-center m-4">Progress over last 7 days</h4>
+    <div className='mt-4 w-full'>
+      <h4 className="m-2 text-center text-lg font-semibold tracking-tight text-gray-600 sm:m-4 sm:text-xl lg:text-3xl">
+      Progress over last 7 days
+    </h4>
       <ResponsiveContainer width="100%" height={200}>
         <AreaChart
           width={500}

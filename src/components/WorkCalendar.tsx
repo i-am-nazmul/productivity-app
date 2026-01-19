@@ -141,49 +141,58 @@ function handleDateClick(day: number) {
   const daysInMonth = getDaysInMonth(currentYear, currentMonth);
 
 
-  return (
-    <div className="px-6">
-      {/* Header with arrows */}
-      <div className="flex justify-between">
-
-        <div className="flex justify-center items-center space-x-6 mb-4">
+   return (
+  <div className="px-2 sm:px-4">
+    {/* Header with arrows */}
+    <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+      <div className="mb-2 flex items-center justify-center space-x-3 sm:mb-4 sm:space-x-4">
         <button
           onClick={handlePrevMonth}
-          className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 cursor-pointer"
+          className="cursor-pointer rounded bg-gray-300 px-3 py-1 text-sm hover:bg-gray-400 sm:px-4 sm:py-2 sm:text-base"
         >
           ←
         </button>
 
-        <h1 className="text-4xl font-bold tracking-tighter text-gray-700 text-center m-4">
+        <h1 className="text-center text-xl font-bold tracking-tight text-gray-700 sm:text-2xl md:text-3xl lg:text-4xl">
           {getMonthName(currentMonth)} {currentYear}
         </h1>
 
         <button
           onClick={handleNextMonth}
-          className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 cursor-pointer"
+          className="cursor-pointer rounded bg-gray-300 px-3 py-1 text-sm hover:bg-gray-400 sm:px-4 sm:py-2 sm:text-base"
         >
           →
         </button>
-        
       </div>
 
-        {!currentGoal ?<h1 className="text-4xl font-bold tracking-tighter text-gray-700 text-center m-4">Please add goals</h1> : <h1 className="text-4xl font-bold tracking-tighter text-gray-700 text-center m-4">Goal : {currentGoal}</h1>}
-
-      </div>
-      
-
-      {/* Calendar days */}
-      <div className="grid grid-cols-7 gap-1 ">
-        {Array.from({ length: daysInMonth }, (_, index) => (
-          <div
-            key={index}
-            onClick={() => handleDateClick(index + 1)}
-            className={`w-12 h-12 flex items-center justify-center hover:bg-gray-500 hover:text-white text-gray-700 font-bold text-2xl font-sans rounded-full cursor-pointer border border-gray-300 ${isDateHighlighted(index+1) ? "bg-emerald-900 text-white" : "hover:bg-gray-500 hover:text-white text-gray-700"}`}
-          >
-            {index + 1}
-          </div>
-        ))}
-      </div>
+      {!currentGoal ? (
+        <h1 className="text-center text-base font-bold tracking-tight text-gray-700 sm:text-lg md:text-xl lg:text-3xl">
+          Please add goals
+        </h1>
+      ) : (
+        <h1 className="text-center text-base font-bold tracking-tight text-gray-700 sm:text-lg md:text-xl lg:text-3xl">
+          Goal : {currentGoal}
+        </h1>
+      )}
     </div>
-  );
+
+    {/* Calendar days */}
+    <div className="mt-2 grid grid-cols-7 gap-1 sm:gap-2">
+      {Array.from({ length: daysInMonth }, (_, index) => (
+        <div
+          key={index}
+          onClick={() => handleDateClick(index + 1)}
+          className={`flex h-8 w-8 items-center justify-center rounded-full border border-gray-300 text-xs font-bold text-gray-700 cursor-pointer sm:h-9 sm:w-9 sm:text-sm md:h-10 md:w-10 md:text-base lg:h-12 lg:w-12 lg:text-2xl ${
+            isDateHighlighted(index + 1)
+              ? "bg-emerald-900 text-white"
+              : "hover:bg-gray-500 hover:text-white"
+          }`}
+        >
+          {index + 1}
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
 }

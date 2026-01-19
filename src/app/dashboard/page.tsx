@@ -114,67 +114,60 @@ export default function DashboardPage(){
       },[getAllGoals]);
 
       return (
-            //outermost div
-            <div className="h-full w-full sm:h-screen sm:w-screen p-1 bg-red-300">
-                  {/* this div conatains all the elements */}
-                  <div className="w-full h-full rounded-sm border border-gray-400 flex flex-col px-4 py-2">
+  <div className="min-h-screen w-screen bg-blue-200 p-1">
+    {/* main card */}
+    <div className="flex h-full min-h-[calc(100vh-0.5rem)] w-full flex-col rounded-sm border border-gray-400 bg-white px-2 py-2 sm:px-4 sm:py-4">
+      {/* Top Navbar */}
+      <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
+        <h1 className="text-4xl font-bold tracking-tight text-gray-700 sm:text-5xl lg:text-7xl">
+          Dashboard
+        </h1>
 
-                        
-                        {/* Top Navbar */}
-                        <div className="flex justify-between flex-col sm:flex-row">
-                              <h1 className="text-7xl font-bold text-gray-700 tracking-tighter">Dashboard</h1>
+        <div className="mt-2 flex w-full flex-col items-stretch gap-2 sm:mt-0 sm:w-auto sm:flex-row sm:items-center sm:justify-end">
+          {displayGoalInput && (
+            <AddNewGoal
+              newGoal={newGoal}
+              setNewGoal={setNewGoal}
+              addNewGoal={addNewGoal}
+            />
+          )}
 
-                              <div className=" flex gap-2 items-center ">
-                                    
+          {displayDurationInput && (
+            <AddGoalData
+              setDuration={setDuration}
+              saveGoalDetails={saveGoalDetails}
+            />
+          )}
 
-                                    {displayGoalInput && (
-                                          <AddNewGoal newGoal={newGoal} setNewGoal={setNewGoal} addNewGoal={addNewGoal}/>
-                                    )}
+          <Image
+            src="/download.png"
+            width={70}
+            height={200}
+            alt="work"
+            className="h-12 w-12 rounded-full bg-amber-400 cursor-pointer shadow-md hover:shadow-lg sm:h-14 sm:w-14"
+            onClick={moveToProfilePage}
+          />
+        </div>
+      </div>
 
-                                    {displayDurationInput && (
-                                          <AddGoalData setDuration={setDuration} saveGoalDetails={saveGoalDetails}/>
-                                    )}
+      {/* body */}
+      <div className="mt-4 flex w-full flex-col items-stretch gap-4 sm:flex-row">
+        <div className="h-full w-full rounded-sm border border-gray-200 bg-white shadow-md sm:w-2/5">
+          <Goals goals={goals} />
+        </div>
 
-                                    <Image src="/download.png"
-                                    width={70}
-                                    height={200}
-                                    alt="work"
-                                    className="bg-amber-400 rounded-full cursor-pointer shadow-md hover:shadow-lg "
-                                    onClick={moveToProfilePage}
-                                    />
+        <div className="flex h-40 w-full items-center justify-center rounded-sm bg-white sm:h-auto sm:w-1/5">
+          <Image src="/working.png" width={200} height={200} alt="work" />
+        </div>
 
+        <div className="flex h-full w-full flex-col gap-4 rounded-sm border border-gray-200 bg-white p-2 shadow-md sm:w-2/5">
+          <WorkCalendar />
+          <Chart />
+        </div>
+      </div>
+    </div>
 
-                              </div>
-                        </div>
-                        
-                        {/* body  */}
-                        <div className="w-full h-full flex flex-col sm:flex-row items-center gap-4 mt-4">
-
-
-                              <div className="bg-white w-full sm:w-2/5 h-full border border-gray-200 rounded-sm shadow-md">
-                                    <Goals goals = {goals}/>
-                              </div>
-
-
-
-                              <div className="bg-white w-full sm:w-1/5 h-full flex justify-center items-center rounded-sm">
-                                    <Image src="/working.png"
-                                    width={200}
-                                    height={200}
-                                    alt="work"
-                                    />
-                              </div>
-
-                              <div className="w-full sm:w-2/5 h-full border border-gray-200 rounded-sm shadow-md flex flex-col gap-4 p-2">
-                                    <WorkCalendar/>
-                                    <Chart/>
-                              </div>
-
-
-                        </div>
-                  </div>
-                  {isLoading && (<Loader message={loaderMessage}/>)}
-            </div>
-            
-      )
+    {isLoading && <Loader message={loaderMessage} />}
+  </div>
+);
 }
