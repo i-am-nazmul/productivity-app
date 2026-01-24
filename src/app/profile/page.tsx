@@ -64,7 +64,8 @@ export default function ProfilePage(){
             </div>
             
 
-            <div className="w-full h-full flex flex-row items-center gap-4 mt-4">
+            <div className="w-full h-full flex flex-col  items-center gap-4 mt-4
+            sm:flex-row">
 
 
                   <div className="bg-white w-full h-full border border-gray-200 rounded-xl flex flex-col items-center
@@ -80,13 +81,13 @@ export default function ProfilePage(){
 
 
 
-                  {/* <div className="bg-white w-1/5 h-full flex justify-center items-center rounded-sm">
+                  <div className="sm:hidden bg-white w-1/5 h-full flex justify-center items-center rounded-sm">
                         <Image src="/working.png"
                         width={200}
                         height={200}
                         alt="work"
                         />
-                  </div> */}
+                  </div>
 
             </div>
       </div>}

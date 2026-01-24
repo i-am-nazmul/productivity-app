@@ -117,6 +117,8 @@ export default function DashboardPage(){
   <div className="min-h-screen w-screen bg-blue-200 p-1">
     {/* main card */}
     <div className="flex h-full min-h-[calc(100vh-0.5rem)] w-full flex-col rounded-sm border border-gray-400 bg-white px-2 py-2 sm:px-4 sm:py-4">
+
+      
       {/* Top Navbar */}
       <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
         <h1 className="text-4xl font-bold tracking-tight text-gray-700 sm:text-5xl lg:text-7xl">
