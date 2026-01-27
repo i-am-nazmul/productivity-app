@@ -67,10 +67,14 @@ export default function SignupPage(){
                               placeholder="Enter the password" className="outline-none tracking-tighter text-2xl px-4 py-2 bg-amber-200 rounded-sm text-black border border-gray-400"
                               onChange={(e)=>{setPassword(e.target.value)}}/>
 
-                              <button className="bg-emerald-900 px-4 py-2 text-white text-4xl tracking-tighter cursor-pointer hover:bg-emerald-950 rounded-sm"
+                              <button className="bg-emerald-900 px-4 py-1 text-white font-semibold tracking-tighter text-2xl cursor-pointer hover:bg-emerald-950 rounded-lg sm:font-normal
+                              sm:text-4xl
+                              sm:py-2"
                               onClick={Signup}>Signup</button>
 
-                              <button className="bg-emerald-900 text-white px-4 font-sans py-1 mt-4 cursor-pointer hover:bg-emerald-950 rounded-xs " onClick={Login}>Already have an account ? Login Instead</button>
+                              <button className="bg-emerald-900 text-white px-3 py-1 mt-2 cursor-pointer 
+                              font-medium hover:bg-emerald-950 rounded-lg 
+                              sm:py-2 sm:font-medium sm:text-2xl" onClick={Login}>Already have an account ? Login Instead</button>
                         </div>
                   </div>}
             </div>

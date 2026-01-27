@@ -46,7 +46,7 @@ export default function ProfilePage(){
 //outermost div
 <div className="min-h-screen w-screen p-1">
       {/* this div conatains all the elements */}
-      {isLoading ? <Loader message={"Fetching your details"}/>:<div className="flex h-full min-h-[calc(100vh-0.5rem)] w-full flex-col rounded-sm border border-gray-400 px-2 py-2 sm:px-4 sm:py-4">
+      {isLoading ? <Loader message={"Fetching your details"}/>:<div className="flex relative min-h-[calc(100vh-0.5rem)] w-full flex-col rounded-sm border border-gray-400 px-2 py-2 sm:px-4 sm:py-4">
 
             
             {/* this block contains the header */}
@@ -55,19 +55,18 @@ export default function ProfilePage(){
 
                   <div className=" flex gap-2 items-center">
                         
-                        <button className="bg-emerald-900 text-white rounded-lg cursor-pointer px-2 py-1 text-2xl sm:text-6xl 
+                        <button className="bg-emerald-800 text-white rounded-lg cursor-pointer px-2 py-1 text-2xl sm:text-6xl 
                         sm:py-2 
-                        sm:rounded-sm active:bg-emerald-800"
+                        sm:rounded-sm active:bg-emerald-700"
                         onClick={moveToDashboard}
                         >Dashboard</button>                                   
                   </div>
             </div>
             
 
-            <div className="w-full h-full flex flex-col  items-center gap-4 mt-4
+            {/* this block contains the body  */}
+            <div className="w-full flex flex-col items-center gap-4 mt-4
             sm:flex-row">
-
-
                   <div className="bg-white w-full h-full border border-gray-200 rounded-xl flex flex-col items-center
                   sm:max-w-fit
                   sm:p-2">
@@ -75,10 +74,10 @@ export default function ProfilePage(){
                               <li className="w-full text-start px-4 py-2 rounded-xs font-semibold text-gray-700 text-2xl tracking-tighter">{user}</li>
                               <li className="w-full text-start px-4 py-2 rounded-xs font-semibold text-gray-700 text-2xl tracking-tighter">{email}</li>
                         </ul>
-                        <button className="bg-emerald-800 px-4 py-1 text-white font-mono tracking-tighter text-2xl mt-4 mb-4 sm:cursor-pointer hover:bg-emerald-900 rounded-lg"
+                        <button className="bg-emerald-800 px-4 py-1 text-white font-mono tracking-tighter text-2xl mt-4 mb-4 sm:cursor-pointer hover:bg-emerald-900 rounded-lg
+                        sm:rounded-sm"
                   onClick={logout}>Logout</button>
                   </div>
-
 
 
                   <div className="sm:hidden bg-white w-1/5 h-full flex justify-center items-center rounded-sm">
@@ -90,6 +89,22 @@ export default function ProfilePage(){
                   </div>
 
             </div>
+
+            {/* absolutely centered over the entire yellow page */}
+            <div className="hidden absolute inset-0 sm:flex justify-center items-center pointer-events-none">
+            <div className="bg-white w-1/5 h-fit flex justify-center items-center rounded-sm">
+            <Image
+                  src="/working.png"
+                  width={200}
+                  height={200}
+                  alt="work"
+            />    
+            </div>
+            </div>
+
+
+
+
       </div>}
 </div>
             
